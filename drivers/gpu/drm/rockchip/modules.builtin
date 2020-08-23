@@ -1,0 +1,16 @@
+kernel/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.ko
+kernel/drivers/gpu/drm/rockchip/cdn-dp.ko
+kernel/drivers/gpu/drm/rockchip/dw-mipi-dsi.ko
+kernel/drivers/gpu/drm/rockchip/analogix_dp-rockchip.ko
+kernel/drivers/gpu/drm/rockchip/inno_hdmi.ko
+kernel/drivers/gpu/drm/rockchip/rockchip_lvds.ko
+kernel/drivers/gpu/drm/rockchip/rockchip_rgb.ko
+kernel/drivers/gpu/drm/rockchip/rockchip_drm_backlight.ko
+kernel/drivers/gpu/drm/rockchip/rockchip_vop_reg.ko
+kernel/drivers/gpu/drm/rockchip/rockchipdrm.ko
+kernel/drivers/gpu/drm/rockchip/rockchip_drm_tve.ko
+kernel/drivers/gpu/drm/rockchip/rk618/rk618_output.ko
+kernel/drivers/gpu/drm/rockchip/rk618/rk618_scaler.ko
+kernel/drivers/gpu/drm/rockchip/rk618/rk618_vif.ko
+kernel/drivers/gpu/drm/rockchip/rk618/rk618_dither.ko
+kernel/drivers/gpu/drm/rockchip/rk618/rk618_lvds.ko

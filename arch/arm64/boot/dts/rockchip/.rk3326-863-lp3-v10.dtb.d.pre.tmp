@@ -1,0 +1,24 @@
+rk3326-863-lp3-v10.o: arch/arm64/boot/dts/rockchip/rk3326-863-lp3-v10.dts \
+ arch/arm64/boot/dts/include/dt-bindings/display/drm_mipi_dsi.h \
+ arch/arm64/boot/dts/include/dt-bindings/gpio/gpio.h \
+ arch/arm64/boot/dts/include/dt-bindings/input/input.h \
+ arch/arm64/boot/dts/include/dt-bindings/input/linux-event-codes.h \
+ arch/arm64/boot/dts/include/dt-bindings/pinctrl/rockchip.h \
+ arch/arm64/boot/dts/include/dt-bindings/sensor-dev.h \
+ arch/arm64/boot/dts/rockchip/rk3326.dtsi \
+ arch/arm64/boot/dts/rockchip/px30.dtsi \
+ arch/arm64/boot/dts/include/dt-bindings/clock/px30-cru.h \
+ arch/arm64/boot/dts/include/dt-bindings/display/media-bus-format.h \
+ arch/arm64/boot/dts/include/dt-bindings/interrupt-controller/arm-gic.h \
+ arch/arm64/boot/dts/include/dt-bindings/interrupt-controller/irq.h \
+ arch/arm64/boot/dts/include/dt-bindings/power/px30-power.h \
+ arch/arm64/boot/dts/include/dt-bindings/soc/rockchip,boot-mode.h \
+ arch/arm64/boot/dts/include/dt-bindings/soc/rockchip-system-status.h \
+ arch/arm64/boot/dts/include/dt-bindings/suspend/rockchip-px30.h \
+ arch/arm64/boot/dts/include/dt-bindings/thermal/thermal.h \
+ arch/arm64/boot/dts/rockchip/px30-dram-default-timing.dtsi \
+ arch/arm64/boot/dts/include/dt-bindings/clock/rockchip-ddr.h \
+ arch/arm64/boot/dts/include/dt-bindings/memory/px30-dram.h \
+ arch/arm64/boot/dts/rockchip/rk3326-863-cif-sensor.dtsi \
+ arch/arm64/boot/dts/../../../../drivers/soc/rockchip/rk_camera_sensor_info.h \
+ arch/arm64/boot/dts/rockchip/px30-android.dtsi

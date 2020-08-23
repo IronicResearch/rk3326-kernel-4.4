@@ -1,0 +1,11 @@
+--- arch/arm64/boot/dts/rockchip/rk3326-863-lp3-v10.dts
++++ arch/arm64/boot/dts/rockchip/rk3326-863-lp3-v10.dts
+@@ -1597,7 +1597,7 @@ clock-frequency = <200000>;
+ 
+ 	u2phy_otg: otg-port {
+ 	//  vbus-supply = <&vcc5v0_host>;
+-		vbus-supply = <&otg_switch>;
++	//	vbus-supply = <&otg_switch>;
+ 		rockchip,low-power-mode;
+ 		status = "okay";
+ 	};

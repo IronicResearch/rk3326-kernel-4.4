@@ -1,0 +1,47 @@
+[1mdiff --git a/arch/arm64/boot/dts/rockchip/px30.dtsi b/arch/arm64/boot/dts/rockchip/px30.dtsi[m
+[1mindex 44ce955aa..7786395 100755[m
+[1m--- a/arch/arm64/boot/dts/rockchip/px30.dtsi[m
+[1m+++ b/arch/arm64/boot/dts/rockchip/px30.dtsi[m
+[36m@@ -1684,7 +1684,7 @@[m
+ 			opp-microvolt = <950000>;[m
+ 			opp-microvolt-L0 = <950000>;[m
+ 			opp-microvolt-L1 = <950000>;[m
+[31m-			//	status = "disabled";[m
+[32m+[m				[32mstatus = "disabled";[m
+ 		[m
+ 		};[m
+ 		opp-528000000 {[m
+[36m@@ -1692,7 +1692,7 @@[m
+ 			opp-microvolt = <975000>;[m
+ 			opp-microvolt-L0 = <975000>;[m
+ 			opp-microvolt-L1 = <975000>;[m
+[31m-				status = "disabled";[m
+[32m+[m		[32m//		status = "disabled";[m
+ 		};[m
+ 		opp-666000000 {[m
+ 			opp-hz = /bits/ 64 <666000000>;[m
+[1mdiff --git a/arch/arm64/boot/dts/rockchip/rk3326-863-lp3-v10.dts b/arch/arm64/boot/dts/rockchip/rk3326-863-lp3-v10.dts[m
+[1mindex 7c1696e..2509666 100755[m
+[1m--- a/arch/arm64/boot/dts/rockchip/rk3326-863-lp3-v10.dts[m
+[1m+++ b/arch/arm64/boot/dts/rockchip/rk3326-863-lp3-v10.dts[m
+[36m@@ -128,7 +128,11 @@[m
+ 			label = "key-f9";[m
+ 			press-threshold-microvolt = <263000>;[m
+ 		};		[m
+[31m-		[m
+[32m+[m		[32mkey-f10-key {[m
+[32m+[m			[32mlinux,code = <KEY_MUTE>;[m
+[32m+[m			[32mlabel = "key-f10";[m
+[32m+[m			[32mpress-threshold-microvolt = <263000>;[m
+[32m+[m		[32m};[m[41m		[m
+      key-f13-key {[m
+       linux,code = <KEY_POWER>;[m
+       label = "key-f13";[m
+[1mdiff --git a/logo.bmp b/logo.bmp[m
+[1mindex 570661b..2ac77c7 100755[m
+Binary files a/logo.bmp and b/logo.bmp differ
+[1mdiff --git a/logo_kernel.bmp b/logo_kernel.bmp[m
+[1mold mode 100755[m
+[1mnew mode 100644[m
+[1mindex eb3f0e1..2ac77c7[m
+Binary files a/logo_kernel.bmp and b/logo_kernel.bmp differ

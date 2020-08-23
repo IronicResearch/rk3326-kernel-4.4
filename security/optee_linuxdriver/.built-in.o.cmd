@@ -1,0 +1,1 @@
+cmd_security/optee_linuxdriver/built-in.o :=  ./../prebuilts/gcc/linux-x86/aarch64/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-ld -EL    -r -o security/optee_linuxdriver/built-in.o security/optee_linuxdriver/core/built-in.o security/optee_linuxdriver/armtz/built-in.o 

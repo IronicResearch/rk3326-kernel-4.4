@@ -1,0 +1,1 @@
+cmd_block/partitions/built-in.o :=  ./../prebuilts/gcc/linux-x86/aarch64/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-ld -EL    -r -o block/partitions/built-in.o block/partitions/check.o block/partitions/rk.o block/partitions/cmdline.o block/partitions/msdos.o block/partitions/efi.o 

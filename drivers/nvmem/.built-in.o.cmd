@@ -1,0 +1,1 @@
+cmd_drivers/nvmem/built-in.o :=  ./../prebuilts/gcc/linux-x86/aarch64/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-ld -EL    -r -o drivers/nvmem/built-in.o drivers/nvmem/nvmem_core.o drivers/nvmem/nvmem_rockchip_efuse.o drivers/nvmem/nvmem-rockchip-otp.o 

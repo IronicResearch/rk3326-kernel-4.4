@@ -1,0 +1,3 @@
+kernel/drivers/thermal/thermal_sys.ko
+kernel/drivers/thermal/rockchip_thermal.ko
+kernel/drivers/thermal/rk3368_thermal.ko

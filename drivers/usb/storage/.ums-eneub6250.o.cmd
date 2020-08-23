@@ -1,0 +1,1 @@
+cmd_drivers/usb/storage/ums-eneub6250.o := ./../prebuilts/gcc/linux-x86/aarch64/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-ld -EL    -r -o drivers/usb/storage/ums-eneub6250.o drivers/usb/storage/ene_ub6250.o 

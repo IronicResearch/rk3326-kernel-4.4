@@ -1,0 +1,1 @@
+cmd_net/bridge/built-in.o :=  ./../prebuilts/gcc/linux-x86/aarch64/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-ld -EL    -r -o net/bridge/built-in.o net/bridge/bridge.o net/bridge/br_netfilter.o net/bridge/netfilter/built-in.o 

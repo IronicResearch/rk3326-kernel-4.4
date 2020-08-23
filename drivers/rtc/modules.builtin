@@ -1,0 +1,2 @@
+kernel/drivers/rtc/rtc-hym8563.ko
+kernel/drivers/rtc/rtc-rk808.ko

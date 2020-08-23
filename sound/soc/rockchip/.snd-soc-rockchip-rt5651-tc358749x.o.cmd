@@ -1,0 +1,1 @@
+cmd_sound/soc/rockchip/snd-soc-rockchip-rt5651-tc358749x.o := ./../prebuilts/gcc/linux-x86/aarch64/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-ld -EL    -r -o sound/soc/rockchip/snd-soc-rockchip-rt5651-tc358749x.o sound/soc/rockchip/rockchip_rt5651_tc358749x.o 

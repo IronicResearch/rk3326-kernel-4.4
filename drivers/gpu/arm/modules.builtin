@@ -1,0 +1,2 @@
+kernel/drivers/gpu/arm/bifrost/bifrost_kbase.ko
+kernel/drivers/gpu/arm/mali400/mali/mali.ko
