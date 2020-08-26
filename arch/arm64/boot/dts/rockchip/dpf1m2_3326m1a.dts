@@ -14,13 +14,8 @@
 #include "rk3326-863-cif-sensor.dtsi"
 #include "px30-android.dtsi"
 
-#ifdef M800X1280_ILI9881C_BOE_TV080WXQ_N86
-	#include "lcd/lcd-800x1280-ILI9881C_BOE_TV080WXQ-N86-T01.dtsi"
-#elif M800X1280_ILI9881C_BOE_TV101WXU_N90
-	#include "lcd/lcd-800x1280-ILI9881C_BOE_TV101WXU-N90-49P0_V02.dtsi"
-#elif M800X1280_NWE101BHT40_30A	
-	#include "lcd/lcd-800x1280-NWE101BHT40-30A.dtsi"
-#endif
+
+#include "lcd/lcd-800x1280-ILI9881C_BOE_TV101WXU-N90-49P0_V02.dtsi"
 
 / {
 	model = "Rockchip rk3326 863 board";
@@ -697,24 +692,7 @@ clock-frequency = <200000>;
 	status = "okay";
 	clock-frequency = <200000>;
 
-#ifdef GSL1680_MINGCHU
-	ts@40 {
-		status = "okay";
-		compatible = "GSL,GSL3673_800X1280";
-		reg = <0x40>;
-		irq_gpio_number = <&gpio0 RK_PB5 IRQ_TYPE_LEVEL_LOW>;
-		rst_gpio_number = <&gpio3 RK_PC3 GPIO_ACTIVE_HIGH>;
-	};
-#elif defined(GSL1680_KINGVINA)
-	ts@40 {
-		status = "okay";
-		compatible = "GSL,GSL3673_800X1280";
-		reg = <0x40>;
-		irq_gpio_number = <&gpio0 RK_PB5 IRQ_TYPE_LEVEL_LOW>;
-		rst_gpio_number = <&gpio3 RK_PC3 GPIO_ACTIVE_HIGH>;
-	};
 
-#elif defined(GSL3670)
 	ts@40 {
 		status = "okay";
 		compatible = "GSL,GSL3673_800X1280";
@@ -723,18 +701,6 @@ clock-frequency = <200000>;
 		rst_gpio_number = <&gpio3 RK_PC3 GPIO_ACTIVE_HIGH>;
 	};
 	
-	
-#elif defined(GT9XX)	
-	goodix@5d {
-                compatible = "goodix,gt9xx";
-                reg = <0x5d>;
-                touch-gpio = <&gpio0 RK_PB4 IRQ_TYPE_LEVEL_LOW>;
-                reset-gpio = <&gpio0 RK_PB5 GPIO_ACTIVE_HIGH>;
-                max-x = <1920>;
-                max-y = <1080>;
-                tp-size=<911>;
-    };
-#endif
 
 	sensor7660@1d {
 		compatible = "gs_sc7660"; 
