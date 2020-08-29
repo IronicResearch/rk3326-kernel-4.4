@@ -197,6 +197,8 @@
 		rockchip,screen-on-voltage = <3600>;
 		status = "disabled";
 	};
+
+	/* FIXME -- GPIO conficts with vb-switch */
 	ykq {
                 compatible = "ykq";
                 data-gpio = <&gpio0 11 GPIO_ACTIVE_HIGH>;
@@ -283,6 +285,7 @@
 		status = "okay";
 	};
 
+	/* FIXME -- GPIO conflict with vb-switch */
         gpio_control {
                 compatible = "gpio_ctrl";
                 gpio_control_1  =<&gpio3 RK_PD3 GPIO_ACTIVE_LOW>;
@@ -293,7 +296,18 @@
                 status = "okay";
         };
 
-
+	vb-switch {
+		status = "disabled";
+		compatible = "rockchip,vbswitch";
+		chan_a = <&gpio3 RK_PD2 GPIO_ACTIVE_LOW >;
+		chan_b = <&gpio3 RK_PD3 GPIO_ACTIVE_LOW >;
+		chan_k = <&gpio3 RK_PD1 GPIO_ACTIVE_LOW >;
+		scrl_a = <&gpio0 RK_PB3 GPIO_ACTIVE_LOW >;
+		scrl_b = <&gpio0 RK_PB4 GPIO_ACTIVE_LOW >;
+		scrl_k = <&gpio0 RK_PB2 GPIO_ACTIVE_LOW >;
+		tpo1 = <&gpio3 RK_PA0 GPIO_ACTIVE_LOW >;
+		tpo2 = <&gpio3 RK_PA1 GPIO_ACTIVE_LOW >;
+	};
 };
 
 &cif {
@@ -742,6 +756,13 @@ clock-frequency = <200000>;
 		poll_delay_ms = <30>;
 		layout = <7>;
 		reprobe_en = <1>;
+	};
+
+	it7236@46 {
+		status = "disabled";
+		compatible = "it7236";
+		reg = <0x46>;
+		irq-gpio = <&gpio0 RK_PB5 IRQ_TYPE_LEVEL_LOW>;
 	};
 };
 
