@@ -38,12 +38,12 @@
 #include <linux/rk_keys.h>
 
 #define EMPTY_DEFAULT_ADVALUE		1024
-#define DRIFT_DEFAULT_ADVALUE		70
+#define DRIFT_DEFAULT_ADVALUE		10
 #define INVALID_ADVALUE			-1
 #define EV_ENCALL			KEY_F4
 #define EV_MENU				KEY_F1
 
-#if 0
+#if 1
 #define key_dbg(bdata, format, arg...)		\
 	dev_info(&bdata->input->dev, format, ##arg)
 #else
@@ -68,6 +68,7 @@ struct rk_keys_button {
 	int gpio;		/* gpio only */
 	int adc_value;		/* adc only */
 	int adc_state;		/* adc only */
+	int adc_retry;		/* adc only */
 	int active_low;		/* gpio only */
 	int wakeup;		/* gpio only */
 	struct timer_list timer;
@@ -130,10 +131,9 @@ static void keys_timer(unsigned long _data)
 
 	if (button->state != state) {
 		button->state = state;
-		input_event(input, EV_KEY, button->code, button->state);
-		key_dbg(pdata, "%skey[%s]: report event[%d] state[%d]\n",
+		key_dbg(pdata, "%skey[%s]: report event[%d] state[%d] raw[%d]\n",
 			button->type == TYPE_ADC ? "adc" : "gpio",
-			button->desc, button->code, button->state);
+			button->desc, button->code, button->state, pdata->result);
 		input_event(input, EV_KEY, button->code, button->state);
 		input_sync(input);
 	}
@@ -198,20 +198,37 @@ static int rk_key_adc_iio_read(struct rk_keys_drvdata *data)
 	return val;
 }
 
+static int rk_key_adc_read_median3(struct rk_keys_drvdata *data)
+{
+	int x, y, z;
+
+	x = rk_key_adc_iio_read(data);
+	y = rk_key_adc_iio_read(data);
+	z = rk_key_adc_iio_read(data);
+
+	if (x < y)
+		return (y < z) ? y : (x < z) ? z : x;
+	else
+		return (x < z) ? x : (y < z) ? z : y;
+}
+
 static void adc_key_poll(struct work_struct *work)
 {
 	struct rk_keys_drvdata *ddata;
 	int i, result = -1;
+	unsigned long resample = ADC_SAMPLE_JIFFIES;
 
 	ddata = container_of(work, struct rk_keys_drvdata, adc_poll_work.work);
 	if (!ddata->in_suspend) {
-		result = rk_key_adc_iio_read(ddata);
+		result = rk_key_adc_read_median3(ddata);
 		if (result > INVALID_ADVALUE &&
 		    result < (EMPTY_DEFAULT_ADVALUE - ddata->drift_advalue))
 			ddata->result = result;
 		for (i = 0; i < ddata->nbuttons; i++) {
 			struct rk_keys_button *button = &ddata->button[i];
 
+			if (result <= INVALID_ADVALUE)
+				break;
 			if (!button->adc_value)
 				continue;
 			if (result < button->adc_value + ddata->drift_advalue &&
@@ -219,13 +236,20 @@ static void adc_key_poll(struct work_struct *work)
 				button->adc_state = 1;
 			else
 				button->adc_state = 0;
-			if (button->state != button->adc_state)
-				mod_timer(&button->timer,
-					  jiffies + DEBOUNCE_JIFFIES);
+			if (button->state != button->adc_state) {
+				if (button->adc_retry) {
+					mod_timer(&button->timer, jiffies + DEBOUNCE_JIFFIES);
+					button->adc_retry = 0;
+				}
+				else {
+					button->adc_retry++;
+					resample = DEBOUNCE_JIFFIES;
+				}
+			}
 		}
 	}
 
-	schedule_delayed_work(&ddata->adc_poll_work, ADC_SAMPLE_JIFFIES);
+	schedule_delayed_work(&ddata->adc_poll_work, resample);
 }
 
 static int rk_key_type_get(struct device_node *node,

@@ -1,0 +1,140 @@
+/*
+ * Copyright (C) 2014 ROCKCHIP, Inc.
+ * arch/arm/boot/dts/lcd-lq070m1sx01-mipi.dtsi
+ * author: libing@rock-chips.com
+ * create date: 2014-04-15
+ * lcd model: tv097x0m
+ * resolution: 768 X 1024
+ * mipi channel: single 
+ */
+
+#include <dt-bindings/display/mipi_dsi.h>
+
+/ {
+		/* about mipi */
+		disp_mipi_init: mipi_dsi_init{
+					compatible = "rockchip,mipi_dsi_init";
+					rockchip,screen_init	= <1>;
+					rockchip,dsi_lane		= <4>;
+					rockchip,dsi_hs_clk		= <400>;
+					rockchip,mipi_dsi_num	= <1>;
+		};
+		disp_mipi_power_ctr: mipi_power_ctr {
+					compatible = "rockchip,mipi_power_ctr";
+					
+					mipi_lcd_rst:mipi_lcd_rst{
+							compatible = "rockchip,lcd_rst";
+							rockchip,gpios = <&gpio3 RK_PC1 GPIO_ACTIVE_LOW>;
+							rockchip,delay = <300>;
+					};
+					mipi_lcd_en:mipi_lcd_en {
+							compatible = "rockchip,lcd_en";
+							rockchip,gpios = <&gpio3 RK_PC3 GPIO_ACTIVE_LOW>;
+							rockchip,delay = <100>;
+					};
+		};
+		
+		disp_mipi_init_cmds: screen-on-cmds {
+					rockchip,cmd_debug = <1>;
+					compatible = "rockchip,screen-on-cmds";
+					
+					/*
+					rockchip,on-cmds0 {
+							compatible = "rockchip,on-cmds";
+							rockchip,cmd_type = <LPDT>;
+							rockchip,dsi_id = <0>;
+							rockchip,cmd = <0x05 0x01 >;
+							rockchip,cmd_delay = <150>;
+					};
+					*/
+					rockchip,on-cmds1 {
+							compatible = "rockchip,on-cmds";
+							rockchip,cmd_type = <LPDT>;
+							rockchip,dsi_id = <0>;
+							rockchip,cmd = <0x39 0xf0 0x5a 0x5a>;
+							rockchip,cmd_delay = <0>;
+					};
+					
+					rockchip,on-cmds2 {
+							compatible = "rockchip,on-cmds";
+							rockchip,cmd_type = <LPDT>;
+							rockchip,dsi_id = <0>;
+							rockchip,cmd = <0x39 0xf1 0x5a 0x5a>;
+							rockchip,cmd_delay = <0>;
+					};
+					rockchip,on-cmds3 {
+							compatible = "rockc1ip,on-cmds";
+							rockchip,cmd_type = <LPDT>;
+							rockchip,dsi_id = <0>;
+							rockchip,cmd = <0x39 0xfc 0xa5 0xa5>;
+							rockchip,cmd_delay = <0>;
+					};
+					rockchip,on-cmds4 {
+							compatible = "rockchip,on-cmds";
+							rockchip,cmd_type = <LPDT>;
+							rockchip,dsi_id = <0>;
+							rockchip,cmd = <0x39 0xd0 0x00 0x10>;
+							rockchip,cmd_delay = <0>;
+					};
+					rockchip,on-cmds5 {
+							compatible = "rockchip,on-cmds";
+							rockchip,cmd_type = <LPDT>;
+							rockchip,dsi_id = <0>;
+							rockchip,cmd = <0x39 0xd8 0x5d 0xb8 0x10>;
+							rockchip,cmd_delay = <10>;
+					};
+					/*
+					rockchip,on-cmds6 {
+							compatible = "rockchip,on-cmds";
+							rockchip,cmd_type = <LPDT>;
+							rockchip,dsi_id = <0>;
+							rockchip,cmd = <0x13 0x35>;
+							rockchip,cmd_delay = <0>;
+					};*/
+					rockchip,on-cmds7 {
+							compatible = "rockchip,on-cmds";
+							rockchip,cmd_type = <LPDT>;
+							rockchip,dsi_id = <0>;
+							rockchip,cmd = <0x05 0x11>;
+							rockchip,cmd_delay = <120>;
+					};
+					rockchip,on-cmds8 {
+							compatible = "rockchip,on-cmds";
+							rockchip,cmd_type = <LPDT>;
+							rockchip,dsi_id = <0>;
+							rockchip,cmd = <0x05 0x29>;
+							rockchip,cmd_delay = <0>;
+							};
+		};
+
+		disp_timings: display-timings {
+                        native-mode = <&timing0>;
+                        compatible = "rockchip,display-timings";
+                        timing0: timing0 {
+				screen-type = <7>; //<SCREEN_MIPI>;
+				lvds-format = <0>; //<LVDS_8BIT_1>;
+				out-face    = <0>; //<OUT_P888>;
+				clock-frequency = <60000000>;
+				hactive = <768>;
+				vactive = <1024>;
+				hsync-len = <16>;
+				hback-porch = <148>;
+				hfront-porch = <116>;
+				
+				vsync-len = <4>;
+				vback-porch = <12>;
+				vfront-porch = <16>;
+				
+				hsync-active = <0>;
+				vsync-active = <0>;
+				
+				screen-width            = <147>;
+				screen-hight            = <206>;
+				de-active = <0>;
+				pixelclk-active = <0>;
+				swap-rb = <0>;
+				swap-rg = <0>;
+				swap-gb = <0>;
+			};
+		};
+};
