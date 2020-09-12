@@ -55,7 +55,7 @@ Module.symvers
 /vmlinuz
 /System.map
 /Module.markers
-
+arch/arm64/boot/Image
 #
 # Debian directory (make deb-pkg)
 #

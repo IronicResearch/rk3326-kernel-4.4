@@ -15,7 +15,14 @@
 #include "px30-android.dtsi"
 
 
-#include "lcd/lcd-800x1280-ILI9881C_BOE_TV101WXU-N90-49P0_V02.dtsi"
+#define M800X1280_ILI9881C_BOE_TV101WXU_N90
+
+#ifdef M800X1280_ILI9881C_BOE_TV101WXU_N90
+	#include "lcd/lcd-800x1280-ILI9881C_BOE_TV101WXU-N90-49P0_V02.dtsi"
+
+#elif M768X1024_TV097X0M
+	#include "lcd/lcd-mipi-768x1280-tv097x0m.dtsi"
+#endif
 
 / {
 	model = "Rockchip rk3326 863 board";
@@ -296,13 +303,16 @@
 
 };
 
-&cif {
-	status = "disabled";
+
+&isp_mmu {
+	status = "okay";
 };
 
-&cif_sensor {
-	status = "disabled";
+
+&rk_isp {
+	status = "okay";
 };
+
 
 &display_subsystem {
 	status = "okay";
