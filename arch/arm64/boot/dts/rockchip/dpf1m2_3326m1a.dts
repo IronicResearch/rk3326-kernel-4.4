@@ -205,7 +205,7 @@
                 irp-gpio = <&gpio0 10 IRQ_TYPE_LEVEL_HIGH>; //0 10
                 jl-gpio = <&gpio3 27 IRQ_TYPE_LEVEL_HIGH>;
                 host-gpio=<&gpio3 23 GPIO_ACTIVE_HIGH>;
-                status = "disabled";
+                status = "okay";
         };
 /*	jl {
                 compatible = "jl";
@@ -293,11 +293,11 @@
                //gpio_control_3  =<&gpio0 GPIO_D4 GPIO_ACTIVE_HIGH>;
                //gpio_control_DRV =<&gpio8 GPIO_A6 GPIO_ACTIVE_HIGH>;
                 //gpio_control_PWR =<&gpio8 GPIO_A3 GPIO_ACTIVE_LOW>;
-                status = "disabled";
+                status = "okay";
         };
 
 	vb-switch {
-		status = "okay";
+		status = "disabled";
 		compatible = "rockchip,vbswitch";
 		chan_a = <&gpio3 RK_PD2 GPIO_ACTIVE_LOW >;
 		chan_b = <&gpio3 RK_PD3 GPIO_ACTIVE_LOW >;
@@ -708,7 +708,7 @@ clock-frequency = <200000>;
 
 
 	ts@40 {
-		status = "disabled";
+		status = "okay";
 		compatible = "GSL,GSL3673_800X1280";
 		reg = <0x40>;
 		irq_gpio_number = <&gpio0 RK_PB5 IRQ_TYPE_LEVEL_LOW>;
