@@ -13,6 +13,7 @@
 #include "rk3326.dtsi"
 #include "rk3326-863-cif-sensor.dtsi"
 #include "px30-android.dtsi"
+//#include "lcd-tv097x0m-768x1024.dtsi"
 
 / {
 	model = "Rockchip rk3326 863 board";
@@ -194,19 +195,22 @@
 		rockchip,screen-on-voltage = <3600>;
 		status = "disabled";
 	};
+
+	/* FIXME -- GPIO conficts with vb-switch */
 	ykq {
                 compatible = "ykq";
                 data-gpio = <&gpio0 11 GPIO_ACTIVE_HIGH>;
                 irp-gpio = <&gpio0 10 IRQ_TYPE_LEVEL_HIGH>; //0 10
                 jl-gpio = <&gpio3 27 IRQ_TYPE_LEVEL_HIGH>;
                 host-gpio=<&gpio3 23 GPIO_ACTIVE_HIGH>;
-                status = "okay";
+                status = "disabled";
         };
 /*	jl {
                 compatible = "jl";
                 irp-gpio = <&gpio3 27 IRQ_TYPE_LEVEL_HIGH>; 
                 status = "okay";
-        };   */     
+        };   */
+
 	rk817-sound {
 		compatible = "simple-audio-card";
 		simple-audio-card,format = "i2s";
@@ -280,17 +284,29 @@
 		status = "okay";
 	};
 
+	/* FIXME -- GPIO conflict with vb-switch */
         gpio_control {
                 compatible = "gpio_ctrl";
-                gpio_control_1  =<&gpio3 RK_PD3 GPIO_ACTIVE_LOW>;
+                gpio_control_1  =<&gpio3 RK_PD3 GPIO_ACTIVE_LOW>;	// FIXME
                 //gpio_control_2  =<&gpio0 GPIO_B4 GPIO_ACTIVE_LOW>;
                //gpio_control_3  =<&gpio0 GPIO_D4 GPIO_ACTIVE_HIGH>;
                //gpio_control_DRV =<&gpio8 GPIO_A6 GPIO_ACTIVE_HIGH>;
                 //gpio_control_PWR =<&gpio8 GPIO_A3 GPIO_ACTIVE_LOW>;
-                status = "okay";
+                status = "disabled";
         };
 
-
+	vb-switch {
+		status = "okay";
+		compatible = "rockchip,vbswitch";
+		chan_a = <&gpio3 RK_PD2 GPIO_ACTIVE_LOW >;
+		chan_b = <&gpio3 RK_PD3 GPIO_ACTIVE_LOW >;
+		chan_k = <&gpio3 RK_PD1 GPIO_ACTIVE_LOW >;
+		scrl_a = <&gpio0 RK_PB3 GPIO_ACTIVE_LOW >;
+		scrl_b = <&gpio0 RK_PB4 GPIO_ACTIVE_LOW >;
+		scrl_k = <&gpio0 RK_PB2 GPIO_ACTIVE_LOW >;
+		tpo1 = <&gpio3 RK_PA0 GPIO_ACTIVE_LOW >;
+		tpo2 = <&gpio3 RK_PA1 GPIO_ACTIVE_LOW >;
+	};
 };
 
 &cif {
@@ -331,6 +347,7 @@
 		dsi,format = <MIPI_DSI_FMT_RGB888>;
 		dsi,lanes = <4>;
 
+#if 1
 		panel-init-sequence = [
 
 #if 0
@@ -1002,7 +1019,7 @@
 			05 00 01 28
 			05 00 01 10
 		];
-
+#endif
 		display-timings {
 			native-mode = <&timing0>;
 
@@ -1016,6 +1033,22 @@
 				vfront-porch = <20>;//124
 				vsync-len = <4>;
 				vback-porch = <12>;//116
+				hsync-active = <0>;
+				vsync-active = <0>;
+				de-active = <0>;
+				pixelclk-active = <0>;
+			};
+
+			timing2: timing2 {
+				clock-frequency = <60000000>;
+				hactive = <768>;
+				vactive = <1024>;
+				hfront-porch = <116>;
+				hsync-len = <16>;
+				hback-porch = <148>;
+				vfront-porch = <16>;
+				vsync-len = <4>;
+				vback-porch = <12>;
 				hsync-active = <0>;
 				vsync-active = <0>;
 				de-active = <0>;
@@ -1409,10 +1442,10 @@ clock-frequency = <200000>;
 	status = "okay";
 	clock-frequency = <200000>;
 	ts@40 {
-		status = "okay";
+		status = "disabled";
 		compatible = "GSL,GSL3673_800X1280";
 		reg = <0x40>;
-		irq_gpio_number = <&gpio0 RK_PB4 IRQ_TYPE_LEVEL_LOW>;
+		irq_gpio_number = <&gpio0 RK_PB4 IRQ_TYPE_LEVEL_LOW>;	// FIXME
 		rst_gpio_number = <&gpio0 RK_PB5 GPIO_ACTIVE_HIGH>;
 	};
 	sensor7660@1d {
@@ -1427,8 +1460,7 @@ clock-frequency = <200000>;
 		revert_x = <0>;
 		revert_y = <0>;
 		revert_z = <0>;
-		status = "okay";
-		//status = "disabled";
+		status = "disabled";
 	};
 
 	sensor7a20@19 {
@@ -1443,7 +1475,7 @@ clock-frequency = <200000>;
 		revert_x = <0>;
 		revert_y = <0>;
 		revert_z = <0>;
-		status = "okay";
+		status = "disabled";
 	};
 	sensor@19 {
 		status = "disabled";
@@ -1455,6 +1487,13 @@ clock-frequency = <200000>;
 		poll_delay_ms = <30>;
 		layout = <7>;
 		reprobe_en = <1>;
+	};
+
+	it7236@46 {
+		status = "okay";
+		compatible = "it7236";
+		reg = <0x46>;
+		irq-gpio = <&gpio0 RK_PB5 IRQ_TYPE_LEVEL_LOW>;
 	};
 };
 
