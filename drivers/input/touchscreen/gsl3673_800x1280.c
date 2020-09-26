@@ -45,6 +45,7 @@ static char chip_type;
 //#include "rockchip_gsl1680_7inch_800x480_HaoYuan_NEW.h"
 //#include "rochkchip_gslX680_10inch_pb_800x1280.h"
 #include "rockchip_gslX3670_10inch_yk863_800x1280-new270.h"
+#define GSL3673_FLIPXY	1
 #define REPORT_DATA_ANDROID_4_0
 #define SLEEP_CLEAR_POINT
 
@@ -694,6 +695,9 @@ static void report_data(struct gsl_ts *ts, u16 x, u16 y, u8 pressure, u8 id)
 	x = SCREEN_MAX_X - x;
   	y = SCREEN_MAX_Y - y;
 #elif defined(GSL1680_KINGVINA)	
+ 	x = SCREEN_MAX_X - x;
+  	y = SCREEN_MAX_Y - y;
+#elif defined(GSL3673_FLIPXY)
  	x = SCREEN_MAX_X - x;
   	y = SCREEN_MAX_Y - y;
 #endif
