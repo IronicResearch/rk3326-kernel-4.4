@@ -71,7 +71,7 @@ static void move_to_lru(BUF_CACHE_T *bp, BUF_CACHE_T *list);
 /*  Cache Initialization Functions                                      */
 /*======================================================================*/
 
-s32 buf_init(struct super_block *sb)
+s32 exfat_buf_init(struct super_block *sb)
 {
 	FS_INFO_T *p_fs = &(EXFAT_SB(sb)->fs_info);
 

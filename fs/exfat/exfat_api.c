@@ -96,7 +96,7 @@ int FsMountVol(struct super_block *sb)
 
 	sm_P(&z_sem);
 
-	err = buf_init(sb);
+	err = exfat_buf_init(sb);
 	if (!err)
 		err = ffsMountVol(sb);
 	else

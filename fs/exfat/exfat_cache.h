@@ -66,7 +66,7 @@ typedef struct __BUF_CACHE_T {
 /*  External Function Declarations                                      */
 /*----------------------------------------------------------------------*/
 
-s32  buf_init(struct super_block *sb);
+s32  exfat_buf_init(struct super_block *sb);
 s32  buf_shutdown(struct super_block *sb);
 s32  FAT_read(struct super_block *sb, u32 loc, u32 *content);
 s32  FAT_write(struct super_block *sb, u32 loc, u32 content);
