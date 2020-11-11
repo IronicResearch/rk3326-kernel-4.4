@@ -25,6 +25,9 @@
 #include <linux/slab.h>
 #include <linux/delay.h>
 
+//#define M800X1280_ILI9881C_BOE_TV101WXU_N90
+#define M800X1280_ILI9881C_04_HSD_HSD101HWW7_P1017_4H_T01
+
 int lcd_enable;
 struct pwm_bl_data {
 	struct pwm_device	*pwm;
@@ -122,7 +125,11 @@ static int pwm_backlight_update_status(struct backlight_device *bl)
 
 	if (brightness > 0) {
 		//brightness = 255;
+#ifdef M800X1280_ILI9881C_04_HSD_HSD101HWW7_P1017_4H_T01
+		brightness=brightness*190/255;//请自己调节背光
+#elif defined(M800X1280_ILI9881C_BOE_TV101WXU_N90)
 		brightness=brightness*170/255;//请自己调节背光
+#endif
 		duty_cycle = compute_duty_cycle(pb, brightness);
 		pwm_config(pb->pwm, duty_cycle, pb->period);
 		pwm_backlight_power_on(pb, brightness);
