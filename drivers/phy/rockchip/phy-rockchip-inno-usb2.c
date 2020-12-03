@@ -42,7 +42,7 @@
 #define SCHEDULE_DELAY		(60 * HZ)
 #define OTG_SCHEDULE_DELAY	(1 * HZ)
 #define BYPASS_SCHEDULE_DELAY	(2 * HZ)
-
+#define RK817 1
 extern void rk808_set_swout1(int flag);
 struct rockchip_usb2phy;
 
@@ -252,6 +252,7 @@ struct rockchip_usb2phy_port {
 	struct		delayed_work otg_sm_work;
 	struct		delayed_work sm_work;
 	struct		regulator *vbus;
+	struct      gpio_desc *otg_ctl_gpio;
 	const struct	rockchip_usb2phy_port_cfg *port_cfg;
 	struct notifier_block	event_nb;
 	struct wake_lock	wakelock;
@@ -752,11 +753,27 @@ static int rockchip_set_vbus_power(struct rockchip_usb2phy_port *rport,
 	int ret = 0;
 	if(en)
 	{
+#ifdef RK809
 		rk808_set_swout1(1);
+#elif defined (RK817)	
+		if (rport->otg_ctl_gpio) 
+		{
+			gpiod_set_value(rport->otg_ctl_gpio, 1);
+			printk("hxl otg_ctl_gpio 1 \n");
+		}
+#endif
 	}
 	else
 	{
-		rk808_set_swout1(0);	
+#ifdef RK809
+		rk808_set_swout1(0);
+#elif defined (RK817)		
+		if (rport->otg_ctl_gpio) 
+		{
+			printk("hxl otg_ctl_gpio 0 \n");
+			gpiod_set_value(rport->otg_ctl_gpio, 0);
+		}
+#endif			
 	}
 	if (!rport->vbus)
 		return 0;
@@ -1597,7 +1614,14 @@ static int rockchip_usb2phy_otg_port_init(struct rockchip_usb2phy *rphy,
 		dev_warn(&rport->phy->dev, "Failed to get VBUS supply regulator\n");
 		rport->vbus = NULL;
 	}
+	
+	rport->otg_ctl_gpio = devm_gpiod_get_optional(&rport->phy->dev, "otg-gpio",GPIOD_OUT_LOW);
+	//gpiod_set_value(rport->otg_ctl_gpio, 0);
+    if (!IS_ERR_OR_NULL(rport->otg_ctl_gpio)) {
+        desc_to_gpio(rport->otg_ctl_gpio);
+    }
 
+	
 	rport->mode = of_usb_get_dr_mode_by_phy(child_np, -1);
 	if (rport->mode == USB_DR_MODE_HOST ||
 	    rport->mode == USB_DR_MODE_UNKNOWN) {
