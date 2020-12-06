@@ -914,6 +914,7 @@ clock-frequency = <200000>;
 	u2phy_otg: otg-port {
 	//  vbus-supply = <&vcc5v0_host>;
 	//	vbus-supply = <&otg_switch>;
+	otg-gpio-gpios = <&gpio0 RK_PB7 GPIO_ACTIVE_HIGH>;
 		rockchip,low-power-mode;
 		status = "okay";
 	};
@@ -969,8 +970,7 @@ clock-frequency = <200000>;
 	remote_support_psci = <1>;
 	remote_pwm_id = <0>;
 	handle_cpu_id = <1>;
-	status = "okay";
-//	status = "disabled";
+	status = "disabled";
 
         ir_key1{
                 rockchip,usercode = <0x7f80>;
