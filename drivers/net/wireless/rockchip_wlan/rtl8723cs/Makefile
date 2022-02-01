@@ -899,7 +899,7 @@ USER_WIFIMAC_PATH ?=
 ifneq ($(USER_WIFIMAC_PATH),)
 EXTRA_CFLAGS += -DWIFIMAC_PATH=\"$(USER_WIFIMAC_PATH)\"
 else
-EXTRA_CFLAGS += -DWIFIMAC_PATH=\"/data/wifimac.txt\"
+EXTRA_CFLAGS += -DWIFIMAC_PATH=\"/data/misc/wifi/wifimac.txt\"
 endif
 
 endif
