@@ -504,7 +504,7 @@ int rockchip_wifi_mac_addr(unsigned char *buf)
 
 	// from vendor storage
 	if (is_zero_ether_addr(wifi_custom_mac_addr)) {
-		if (get_wifi_addr_vendor(wifi_custom_mac_addr) != 0)
+		if (get_wifi_addr_vendor(wifi_custom_mac_addr) < 0)
 			return -1;
 	}
 
@@ -512,7 +512,7 @@ int rockchip_wifi_mac_addr(unsigned char *buf)
 		wifi_custom_mac_addr[0], wifi_custom_mac_addr[1],
 		wifi_custom_mac_addr[2], wifi_custom_mac_addr[3],
 		wifi_custom_mac_addr[4], wifi_custom_mac_addr[5]);
-	LOG("falsh wifi_custom_mac_addr=[%s]\n", mac_buf);
+	LOG("flash wifi_custom_mac_addr=[%s]\n", mac_buf);
 
 	if (is_valid_ether_addr(wifi_custom_mac_addr)) {
 		if (!strncmp(wifi_chip_type_string, "rtl", 3))
