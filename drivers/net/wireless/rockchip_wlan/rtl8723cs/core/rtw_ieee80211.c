@@ -1381,6 +1381,7 @@ void rtw_macaddr_cfg(u8 *out, const u8 *hw_mac_addr)
 {
 #define DEFAULT_RANDOM_MACADDR 1
 	u8 mac[ETH_ALEN];
+	u8 str[18];
 
 	if (out == NULL) {
 		rtw_warn_on(1);
@@ -1430,6 +1431,9 @@ err_chk:
 		mac[4] = 0x00;
 		mac[5] = 0x00;
 #endif
+		/* save MAC address back to filesystem */
+		sprintf(str, MAC_FMT, MAC_ARG(mac));
+		rtw_store_to_file(WIFIMAC_PATH, str, strlen(str));
 	}
 
 	_rtw_memcpy(out, mac, ETH_ALEN);
