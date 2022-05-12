@@ -1,3 +1,0 @@
-kernel/drivers/input/keyboard/adc-keys.ko
-kernel/drivers/input/keyboard/adc-keys-chan0.ko
-kernel/drivers/input/keyboard/rk_keys.ko
