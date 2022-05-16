@@ -1,0 +1,1 @@
+cmd_firmware/built-in.o :=  ./../prebuilts/gcc/linux-x86/aarch64/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-ld -EL    -r -o firmware/built-in.o firmware/kaweth/new_code.bin.gen.o firmware/kaweth/trigger_code.bin.gen.o firmware/kaweth/new_code_fix.bin.gen.o firmware/kaweth/trigger_code_fix.bin.gen.o 

@@ -1,0 +1,1 @@
+cmd_lib/lz4/built-in.o :=  ./../prebuilts/gcc/linux-x86/aarch64/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-ld -EL    -r -o lib/lz4/built-in.o lib/lz4/lz4_compress.o lib/lz4/lz4_decompress.o 

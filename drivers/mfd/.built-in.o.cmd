@@ -1,0 +1,1 @@
+cmd_drivers/mfd/built-in.o :=  ./../prebuilts/gcc/linux-x86/aarch64/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-ld -EL    -r -o drivers/mfd/built-in.o drivers/mfd/mfd-core.o drivers/mfd/rk618.o drivers/mfd/rk808.o drivers/mfd/syscon.o drivers/mfd/fusb302.o drivers/mfd/rk1000-core.o 

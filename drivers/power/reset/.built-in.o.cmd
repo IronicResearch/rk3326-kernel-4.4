@@ -1,0 +1,1 @@
+cmd_drivers/power/reset/built-in.o :=  ./../prebuilts/gcc/linux-x86/aarch64/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-ld -EL    -r -o drivers/power/reset/built-in.o drivers/power/reset/gpio-poweroff.o drivers/power/reset/reboot-mode.o drivers/power/reset/syscon-reboot-mode.o 

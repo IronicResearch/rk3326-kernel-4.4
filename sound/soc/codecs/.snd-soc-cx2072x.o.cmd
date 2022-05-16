@@ -1,0 +1,1 @@
+cmd_sound/soc/codecs/snd-soc-cx2072x.o := ./../prebuilts/gcc/linux-x86/aarch64/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-ld -EL    -r -o sound/soc/codecs/snd-soc-cx2072x.o sound/soc/codecs/cx2072x.o 

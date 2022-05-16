@@ -1,0 +1,1 @@
+cmd_drivers/mailbox/built-in.o :=  ./../prebuilts/gcc/linux-x86/aarch64/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-ld -EL    -r -o drivers/mailbox/built-in.o drivers/mailbox/mailbox.o drivers/mailbox/rk3368-mailbox.o drivers/mailbox/scpi_protocol.o 

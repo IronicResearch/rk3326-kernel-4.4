@@ -1,0 +1,1 @@
+cmd_fs/debugfs/debugfs.o := ./../prebuilts/gcc/linux-x86/aarch64/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-ld -EL    -r -o fs/debugfs/debugfs.o fs/debugfs/inode.o fs/debugfs/file.o 

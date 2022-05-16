@@ -1,0 +1,8 @@
+kernel/drivers/clk/clk-rk808.ko
+kernel/drivers/clk/clk-pwm.ko
+kernel/drivers/clk/rockchip/rk618/clk-regmap-mux.ko
+kernel/drivers/clk/rockchip/rk618/clk-regmap-divider.ko
+kernel/drivers/clk/rockchip/rk618/clk-regmap-gate.ko
+kernel/drivers/clk/rockchip/rk618/clk-regmap-composite.ko
+kernel/drivers/clk/rockchip/rk618/clk-regmap-pll.ko
+kernel/drivers/clk/rockchip/rk618/clk-rk618.ko

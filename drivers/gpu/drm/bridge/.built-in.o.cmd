@@ -1,0 +1,1 @@
+cmd_drivers/gpu/drm/bridge/built-in.o :=  ./../prebuilts/gcc/linux-x86/aarch64/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-ld -EL    -r -o drivers/gpu/drm/bridge/built-in.o drivers/gpu/drm/bridge/analogix/built-in.o drivers/gpu/drm/bridge/rk1000.o drivers/gpu/drm/bridge/synopsys/built-in.o 

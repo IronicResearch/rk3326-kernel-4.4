@@ -1,0 +1,24 @@
+diff --git a/drivers/mmc/card/block.c b/drivers/mmc/card/block.c
+index 6326c4f..e8f550d 100644
+--- a/drivers/mmc/card/block.c
++++ b/drivers/mmc/card/block.c
+@@ -2871,7 +2871,8 @@ static int mmc_blk_probe(struct mmc_card *card)
+ 	dev_set_drvdata(&card->dev, md);
+ 
+ #if defined(CONFIG_MMC_DW_ROCKCHIP) || defined(CONFIG_MMC_SDHCI_OF_ARASAN)
+-	if (card->host->restrict_caps & RESTRICT_CARD_TYPE_EMMC) {
++	if ((card->host->restrict_caps & RESTRICT_CARD_TYPE_EMMC) &&
++	    !(card->host->restrict_caps & RESTRICT_CARD_TYPE_SD)) {
+ 		this_card = card;
+ 		md->disk->is_rk_disk = true;
+ 	} else {
+@@ -2912,7 +2913,8 @@ static void mmc_blk_remove(struct mmc_card *card)
+ 	struct mmc_blk_data *md = dev_get_drvdata(&card->dev);
+ 
+ #if defined(CONFIG_MMC_DW_ROCKCHIP) || defined(CONFIG_MMC_SDHCI_OF_ARASAN)
+-	if (card->host->restrict_caps & RESTRICT_CARD_TYPE_EMMC)
++	if ((card->host->restrict_caps & RESTRICT_CARD_TYPE_EMMC) &&
++	    !(card->host->restrict_caps & RESTRICT_CARD_TYPE_SD))
+ 		this_card = NULL;
+ #endif
+ 

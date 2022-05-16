@@ -1,0 +1,27 @@
+From 3b6be087d4e57078194ae638eedc0d0738f39bb8 Mon Sep 17 00:00:00 2001
+From: wjt <wjt@incartech.cn>
+Date: Fri, 13 Mar 2020 17:14:55 +0800
+Subject: [PATCH 2/3] modify for gsensor
+
+---
+ drivers/input/sensors/accel/sc7a20.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/input/sensors/accel/sc7a20.c b/drivers/input/sensors/accel/sc7a20.c
+index 00791fe..04df2510d 100755
+--- a/drivers/input/sensors/accel/sc7a20.c
++++ b/drivers/input/sensors/accel/sc7a20.c
+@@ -2357,8 +2357,8 @@ static int gsensor_report_value(struct i2c_client *client, struct sensor_axis *a
+ 	 axis->y = axis->y;
+ 	 axis->z = axis->z;
+ 	/* Report acceleration sensor information */
+-	input_report_abs(sensor->input_dev, ABS_X, -(axis->x));//86v x
+-	input_report_abs(sensor->input_dev, ABS_Y, (axis->y));//86v y
++	input_report_abs(sensor->input_dev, ABS_X, -(axis->y));//86v x
++	input_report_abs(sensor->input_dev, ABS_Y, -(axis->x));//86v y
+ 	input_report_abs(sensor->input_dev, ABS_Z, -(axis->z));
+ 	input_sync(sensor->input_dev);
+ 	//printk("flag=%d Gsensor x==%d  y==%d z==%d\n",flag,axis->x,axis->y,axis->z);
+-- 
+2.7.4
+

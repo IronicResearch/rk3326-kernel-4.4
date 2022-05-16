@@ -1,0 +1,275 @@
+&dsi {
+	status = "okay";
+
+	panel@0 {
+		compatible = "aoly,sl008pa21y1285-b00", "simple-panel-dsi";
+		reg = <0>;
+		backlight = <&backlight>;
+	//	power-supply = <&vcc5v0_host>;//vcc5v0_host  vcc3v3_lcd
+	//	power-invert;
+#if defined (DHTX_CFP3310M1A)
+		enable-gpios = <&gpio3 RK_PC3 GPIO_ACTIVE_LOW>;
+#else
+		enable-gpios = <&gpio3 RK_PC0 GPIO_ACTIVE_HIGH>;
+#endif
+		reset-gpios = <&gpio3 RK_PC1 GPIO_ACTIVE_LOW>;
+		prepare-delay-ms = <20>;
+		reset-delay-ms = <20>;
+		init-delay-ms = <20>;
+		enable-delay-ms = <120>;
+		disable-delay-ms = <20>;
+		unprepare-delay-ms = <20>;
+
+		width-mm = <108>;
+		height-mm = <172>;
+
+		dsi,flags = <(MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST |
+			      MIPI_DSI_MODE_LPM | MIPI_DSI_MODE_EOT_PACKET)>;
+		dsi,format = <MIPI_DSI_FMT_RGB888>;
+		dsi,lanes = <4>;
+
+		panel-init-sequence = [
+
+39 00 04 FF 98 81 03
+//GIP_1
+15 00 02 01 00
+15 00 02 02 00
+15 00 02 03 53        //STVA
+15 00 02 04 00        //STVB
+15 00 02 05 00        //STVC
+15 00 02 06 08        //STVA_Rise
+15 00 02 07 00        //STVB_Rise
+15 00 02 08 00        //STVC_Rise
+15 00 02 09 00        //FTI1R(A)
+15 00 02 0a 00        //FTI2R(B)
+15 00 02 0b 00        //FTI3R(C)
+15 00 02 0c 00        //FTI1F(A)
+15 00 02 0d 00        //FTI2F(B)
+15 00 02 0e 00        //FTI2F(C)
+15 00 02 0f 26    //08        //CLW1(ALR) 45%
+15 00 02 10 26    //08        //CLW2(ARR) 45%
+15 00 02 11 00           
+15 00 02 12 00        
+15 00 02 13 00        //CLWX(ATF)
+15 00 02 14 00
+15 00 02 15 00        //GPMRi(ALR)
+15 00 02 16 00        //GPMRii(ARR)
+15 00 02 17 00        //GPMFi(ALF)
+15 00 02 18 00        //GPMFii(AFF)
+15 00 02 19 00
+15 00 02 1a 00
+15 00 02 1b 00   
+15 00 02 1c 00
+15 00 02 1d 00
+15 00 02 1e 40        //CLKA 40自動反 C0手動反(X8參考CLKB)
+15 00 02 1f C0        //C0
+15 00 02 20 06        //CLKA_Rise
+15 00 02 21 01        //CLKA_Fall
+15 00 02 22 07        //CLKB_Rise(keep toggle需設CLK A後一格)
+15 00 02 23 00        //CLKB_Fall
+15 00 02 24 8A        //CLK keep toggle(AL) 8X往左看
+15 00 02 25 8A        //CLK keep toggle(AR) 8X往左看
+15 00 02 26 00
+15 00 02 27 00
+15 00 02 28 33    //3B       //CLK Phase
+15 00 02 29 33       //CLK overlap
+15 00 02 2a 00  
+15 00 02 2b 00
+15 00 02 2c 08       //GCH R
+15 00 02 2d 08       //GCL R 
+15 00 02 2e 0B       //GCH F        
+15 00 02 2f 0B       //GCL F
+15 00 02 30 00
+15 00 02 31 00
+15 00 02 32 42       //GCH/L ext2/1行為  5E 01:31   5E 00:42
+15 00 02 33 00
+15 00 02 34 00       //VDD1&2 non-overlap 04:2.62us
+15 00 02 35 0A       //GCH/L 區間 00:VS前 01:VS後 10:跨VS 11:frame中       
+15 00 02 36 00
+15 00 02 37 08       //GCH/L
+15 00 02 38 3C	//VDD1&2 toggle 1sec
+15 00 02 39 00
+15 00 02 3a 00 
+15 00 02 3b 00
+15 00 02 3c 00
+15 00 02 3d 00
+15 00 02 3e 00
+15 00 02 3f 00
+15 00 02 40 00
+15 00 02 41 00
+15 00 02 42 00
+15 00 02 43 08       //GCH/L
+15 00 02 44 00
+//GIP_2
+15 00 02 50 01
+15 00 02 51 23
+15 00 02 52 45
+15 00 02 53 67
+15 00 02 54 89
+15 00 02 55 ab
+15 00 02 56 01
+15 00 02 57 23
+15 00 02 58 45
+15 00 02 59 67
+15 00 02 5a 89
+15 00 02 5b ab
+15 00 02 5c cd
+15 00 02 5d ef
+//GIP_3
+15 00 02 5e 00
+15 00 02 5f 01     //FW_CGOUT_L[1]    VDS
+15 00 02 60 01     //FW_CGOUT_L[2]    VDS
+15 00 02 61 06     //FW_CGOUT_L[3]    STV2
+15 00 02 62 06     //FW_CGOUT_L[4]    STV2
+15 00 02 63 06     //FW_CGOUT_L[5]    STV4
+15 00 02 64 06     //FW_CGOUT_L[6]    STV4
+15 00 02 65 00     //FW_CGOUT_L[7]    VSD
+15 00 02 66 00     //FW_CGOUT_L[8]    VSD
+15 00 02 67 17     //FW_CGOUT_L[9]    GCL
+15 00 02 68 02     //FW_CGOUT_L[10]   
+15 00 02 69 16     //FW_CGOUT_L[11]   GCH  
+15 00 02 6a 16     //FW_CGOUT_L[12]   GCH
+15 00 02 6b 02     //FW_CGOUT_L[13]   
+15 00 02 6c 0D     //FW_CGOUT_L[14]   CLK8   
+15 00 02 6d 0D     //FW_CGOUT_L[15]   CLK8
+15 00 02 6e 0C     //FW_CGOUT_L[16]   CLK6    
+15 00 02 6f 0C     //FW_CGOUT_L[17]   CLK6
+15 00 02 70 0F     //FW_CGOUT_L[18]   CLK4
+15 00 02 71 0F     //FW_CGOUT_L[19]   CLK4
+15 00 02 72 0E     //FW_CGOUT_L[20]   CLK2
+15 00 02 73 0E     //FW_CGOUT_L[21]   CLK2
+15 00 02 74 02     //FW_CGOUT_L[22]   VGL
+  
+15 00 02 75 01     //BW_CGOUT_L[1]   
+15 00 02 76 01     //BW_CGOUT_L[2]    
+15 00 02 77 06     //BW_CGOUT_L[3]    
+15 00 02 78 06     //BW_CGOUT_L[4]    
+15 00 02 79 06     //BW_CGOUT_L[5]     
+15 00 02 7a 06     //BW_CGOUT_L[6]     
+15 00 02 7b 00     //BW_CGOUT_L[7]   
+15 00 02 7c 00     //BW_CGOUT_L[8]    
+15 00 02 7d 17     //BW_CGOUT_L[9]      
+15 00 02 7e 02     //BW_CGOUT_L[10]
+15 00 02 7f 16     //BW_CGOUT_L[11]    
+15 00 02 80 16     //BW_CGOUT_L[12]   
+15 00 02 81 02     //BW_CGOUT_L[13] 
+15 00 02 82 0D     //BW_CGOUT_L[14]      
+15 00 02 83 0D     //BW_CGOUT_L[15]   
+15 00 02 84 0C     //BW_CGOUT_L[16]      
+15 00 02 85 0C     //BW_CGOUT_L[17]
+15 00 02 86 0F     //BW_CGOUT_L[18]
+15 00 02 87 0F     //BW_CGOUT_L[19]
+15 00 02 88 0E     //BW_CGOUT_L[20]   
+15 00 02 89 0E     //BW_CGOUT_L[21]   
+15 00 02 8A 02     //BW_CGOUT_L[22]   
+
+
+
+//CMD_Page 4
+39 00 04 FF 98 81 04
+15 00 02 6E 2B    
+15 00 02 6F 35    //37           // reg vcl + pumping ratio VGH=3x VGL=-2.5x
+15 00 02 3A A4           //POWER SAVING
+15 00 02 8D 1A           //VGL -11V
+15 00 02 87 BA           //ESD
+15 00 02 B2 D1
+15 00 02 88 0B
+15 00 02 38 01      
+15 00 02 39 00
+15 00 02 B5 07           //gamma bias
+15 00 02 31 75
+15 00 02 3B 98	
+//CMD_Page 1
+15 00 04 FF 98 81 01
+15 00 02 22 0A          //BGR  SS
+15 00 02 31 00          //Column inversion
+15 00 02 53 40          //VCOM1
+15 00 02 55 40          //VCOM2 
+15 00 02 50 95          //VREG1OUT 4.5V
+15 00 02 51 90          //VREG2OUT -4.5V
+15 00 02 60 22    //06          //SDT
+15 00 02 62 20
+//============Gamma START=============
+//Pos 15 00 02
+15 00 02 A0 00
+15 00 02 A1 1B
+15 00 02 A2 2A
+15 00 02 A3 14
+15 00 02 A4 17
+15 00 02 A5 2B
+15 00 02 A6 1F
+15 00 02 A7 20
+15 00 02 A8 93
+15 00 02 A9 1E
+15 00 02 AA 2A
+15 00 02 AB 7E
+15 00 02 AC 1B
+15 00 02 AD 19
+15 00 02 AE 4C
+15 00 02 AF 22
+15 00 02 B0 28
+15 00 02 B1 4B
+15 00 02 B2 59
+15 00 02 B3 23
+//Neg 15 00 02
+15 00 02 C0 00
+15 00 02 C1 1B
+15 00 02 C2 2A
+15 00 02 C3 14
+15 00 02 C4 17
+15 00 02 C5 2B
+15 00 02 C6 1F
+15 00 02 C7 20
+15 00 02 C8 93
+15 00 02 C9 1E
+15 00 02 CA 2A
+15 00 02 CB 7E
+15 00 02 CC 1B
+15 00 02 CD 19
+15 00 02 CE 4C
+15 00 02 CF 22
+15 00 02 D0 28
+15 00 02 D1 4B
+15 00 02 D2 59
+15 00 02 D3 23
+//============ Gamma END===========				
+//CMD_Page 0			
+15 00 04 FF 98 81 00
+05 78 01 11
+05 14 01 29
+//--- TE----//
+15 00 02   35  00 
+
+		];
+
+		panel-exit-sequence = [
+			05 00 01 28
+			05 00 01 10
+		];
+
+		display-timings {
+			native-mode = <&timing0>;
+
+			timing0: timing0 {
+				clock-frequency = <66000000>;
+				hactive = <800>;
+				vactive = <1280>;//1068
+				hfront-porch = <30>;
+				hsync-len = <20>;
+				hback-porch = <20>;
+				vfront-porch = <20>;//124
+				vsync-len = <4>;
+				vback-porch = <12>;//116
+				hsync-active = <0>;
+				vsync-active = <0>;
+				de-active = <0>;
+				pixelclk-active = <0>;
+			};
+		};
+	};
+};
+
+
+&route_dsi {
+	status = "okay";
+};

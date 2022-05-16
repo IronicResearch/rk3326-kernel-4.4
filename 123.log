@@ -1,0 +1,1971 @@
+commit c51aac8b683a5845528be729aa3b711697b267e5
+Author: szyk <wangjisea@163.com>
+Date:   Fri Nov 16 14:21:55 2018 +0800
+
+    hls
+
+arch/arm64/boot/dts/rockchip/px30-android.dtsi
+arch/arm64/boot/dts/rockchip/rk3326-863-lp3-v10.dts
+drivers/gpu/drm/panel/panel-simple.c
+drivers/input/keyboard/adc-keys.c
+drivers/input/misc/Makefile
+drivers/input/misc/ykq-control.c
+drivers/input/sensors/accel/Makefile
+drivers/input/sensors/accel/lt8911b.c
+drivers/input/sensors/accel/sc7a20.c
+drivers/input/touchscreen/gt9xx/gt9xx.c
+drivers/power/rk817_charger.c
+drivers/video/backlight/pwm_bl.c
+no_config_817battery.config
+t816.config
+
+commit 12ba7259a02b91e999f98d2ce9427ed61e0a7722
+Author: dpp <dpp@incar.com>
+Date:   Thu Jun 28 16:06:23 2018 +0800
+
+    Revert "定频528M解决MUSIC拖动进度条及休眠唤醒杂音"
+    
+    This reverts commit 519ecec7d82eefdc6f214a427dff6791c01d5e41.
+
+arch/arm64/boot/dts/rockchip/px30.dtsi
+
+commit 8bb73df696f80a00c82d116f88c670d536ab6a0a
+Author: dpp <dpp@incar.com>
+Date:   Wed Jun 27 19:46:23 2018 +0800
+
+    google显示未认证修改
+
+arch/arm64/boot/dts/rockchip/px30-android.dtsi
+
+commit 519ecec7d82eefdc6f214a427dff6791c01d5e41
+Author: dpp <dpp@incar.com>
+Date:   Wed Jun 27 16:45:41 2018 +0800
+
+    定频528M解决MUSIC拖动进度条及休眠唤醒杂音
+
+arch/arm64/boot/dts/rockchip/px30.dtsi
+
+commit 115c785da67befeb8d32e0e05b58533990619993
+Author: dpp <dpp@incar.com>
+Date:   Mon Jun 25 15:06:26 2018 +0800
+
+    dmc rm 328m,450m
+
+arch/arm64/boot/dts/rockchip/px30.dtsi
+
+commit 8fbbe109f6eb4bba6a7bf1b4210a805483cc3eb2
+Author: dpp <dpp@incar.com>
+Date:   Fri Jun 22 11:31:00 2018 +0800
+
+    提高采样率 解决cts--gsi8项 vts2项sensor fail
+
+drivers/input/sensors/accel/sc7a20.c
+
+commit 24978cf11b3cf45259b020e72f8927ac437705e3
+Author: Yifeng Zhao <zyf@rock-chips.com>
+Date:   Wed May 30 11:54:34 2018 +0800
+
+    drivers: rk_nand: fix update loader fail issue
+    
+    patch for arm arch32 and arch64.
+    
+    bug: The NAND driver will write data to the wrong address with
+    2K page size SLC NAND FLASH.
+    
+    [   14.047987] IDBlockWriteData 100 100
+    [   14.074717] IDBlockWriteData 100 100 ret= 0
+    [   14.075091] IdBlockReadData 100 100
+    [   14.084396] IdBlockReadData 100 100 ret= 0
+    [   14.084777] write and check error:1 idb=1,offset=86,r=238,w=40238
+    
+    Change-Id: I2d635d0939edb2b2674c37898d5afd668da2ae5a
+    Signed-off-by: Yifeng Zhao <zyf@rock-chips.com>
+
+drivers/rk_nand/rk_ftl_arm_v7.S
+drivers/rk_nand/rk_ftlv5_arm64.S
+drivers/rk_nand/rk_zftl_arm64.S
+
+commit ad8963f116cafc29e5da87f0f564370cec6b0276
+Author: Yifeng Zhao <zyf@rock-chips.com>
+Date:   Wed Jun 13 09:36:49 2018 +0800
+
+    drivers: rknand: support rk3308
+    
+    rk3308 has a new nandc, driver need modify to support.
+    
+    Change-Id: I1b30f5ac106759873cd0a14b6340b49232f5106c
+    Signed-off-by: Yifeng Zhao <zyf@rock-chips.com>
+
+drivers/rk_nand/rk_ftl_arm_v7_thumb.S
+
+commit ff926d599c5470faef01a6814641a1e417c5c035
+Author: Yifeng Zhao <zyf@rock-chips.com>
+Date:   Mon May 28 11:30:59 2018 +0800
+
+    drivers: rk_nand: fix update loader fail issue
+    
+    bug: The NAND driver will write data to the wrong address with
+    2K page size SLC NAND FLASH.
+    
+    [   14.047987] IDBlockWriteData 100 100
+    [   14.074717] IDBlockWriteData 100 100 ret= 0
+    [   14.075091] IdBlockReadData 100 100
+    [   14.084396] IdBlockReadData 100 100 ret= 0
+    [   14.084777] write and check error:1 idb=1,offset=86,r=238,w=40238
+    
+    Change-Id: Id92051d9a6a345454054fe79b88ec05c48174d81
+    Signed-off-by: Yifeng Zhao <zyf@rock-chips.com>
+
+drivers/rk_nand/rk_ftl_arm_v7.S
+
+commit d0e439579517091a70f9c3f8de286af731462526
+Author: Yifeng Zhao <zyf@rock-chips.com>
+Date:   Thu May 10 14:54:08 2018 +0800
+
+    drivers: rk_nand: zftl static wear leveling strategy optimize
+    
+    1. Garbage collection does not deal with the updated blocks.
+    2. Static wear considers the SLC mode erase count and XLC
+    mode erase count
+    
+    Change-Id: I3a404a686e48f8ae44f5e7e507f6d1ef633671d4
+    Signed-off-by: Yifeng Zhao <zyf@rock-chips.com>
+
+drivers/rk_nand/rk_nand_blk.c
+drivers/rk_nand/rk_zftl_arm64.S
+
+commit 601476de30b6d731a3e66902bc0eef300bd75992
+Author: Yifeng Zhao <zyf@rock-chips.com>
+Date:   Tue May 8 09:37:08 2018 +0800
+
+    drivers: rk_nand: fix no previous prototype warning
+    
+    Fix the following warning(s):
+    drivers/rk_nand/rk_nand_base.c:105:15: warning: no previous prototype for ‘rknad_dma_map_single’ [-Wmissing-prototypes]
+    drivers/rk_nand/rk_nand_base.c:117:6: warning: no previous prototype for ‘rknan_dma_unmap_single’ [-Wmissing-prototypes]
+    drivers/rk_nand/rk_nand_base.c:128:5: warning: no previous prototype for ‘rknan_flash_cs_init’ [-Wmissing-prototypes]
+    drivers/rk_nand/rk_nand_base.c:142:5: warning: no previous prototype for ‘rknand_get_boot_media’ [-Wmissing-prototypes
+    ......
+    
+    Change-Id: Iacd769790f97bb89f44fee7f4d24d315d0179399
+    Signed-off-by: Yifeng Zhao <zyf@rock-chips.com>
+
+drivers/rk_nand/rk_nand_base.c
+drivers/rk_nand/rk_nand_base.h
+drivers/rk_nand/rk_nand_blk.c
+drivers/rk_nand/rk_nand_blk.h
+
+commit d95a734a7d5e0d126921262f8bac9a04a6cb1b67
+Author: dpp <dpp@incar.com>
+Date:   Wed Jun 20 15:52:06 2018 +0800
+
+    sc7a20还原 只修改ctsfail项避免引起其他fail
+
+drivers/input/sensors/accel/sc7a20.c
+
+commit 5c743773a3d850b2d78b250843c63553251c111c
+Author: dpp <dpp@incar.com>
+Date:   Wed Jun 20 15:50:53 2018 +0800
+
+    Revert "sc7a20 cts-gsi fail"
+    
+    This reverts commit 2c59e3a0e7dd6600adb84d0cd880d4778614971a.
+
+drivers/input/sensors/accel/sc7a20.c
+
+commit 2c59e3a0e7dd6600adb84d0cd880d4778614971a
+Author: dpp <dpp@incar.com>
+Date:   Wed Jun 20 14:23:13 2018 +0800
+
+    sc7a20 cts-gsi fail
+
+drivers/input/sensors/accel/sc7a20.c
+
+commit dae22d8b0d821a79269991db0f4c68e9d69a11a9
+Author: dpp <dpp@incar.com>
+Date:   Fri Jun 15 20:26:32 2018 +0800
+
+    spk-volume 7 cap vol 2
+
+arch/arm64/boot/dts/rockchip/rk3326-863-lp3-v10.dts
+
+commit ec08227064eaf9e76292639789ca916a7a239dfc
+Author: dpp <dpp@incar.com>
+Date:   Fri Jun 15 20:21:15 2018 +0800
+
+    adjust dmc_opp_table
+
+arch/arm64/boot/dts/rockchip/rk3326-863-lp3-v10.dts
+
+commit 6da83ca6c4b92e244029107c58c9c34630a751e1
+Author: wang junwu <wjw@incartech.cn>
+Date:   Fri Jun 15 11:55:12 2018 +0800
+
+    patch:0001-video-rockchip-rga2-remove-flush-cache
+
+drivers/video/rockchip/rga2/rga2_mmu_info.c
+
+commit c72672a89e6cc6a3dabeee38743ac991cf82e780
+Author: wang junwu <wjw@incartech.cn>
+Date:   Fri Jun 15 11:47:03 2018 +0800
+
+    update config for GMS
+
+arch/arm64/configs/rk3326_yk_defconfig
+arch/arm64/configs/rockchip_defconfig
+
+commit 78eba3b8e5096dce14991c9ac52689dcaec43f08
+Merge: ace3b1e 66e6bd2
+Author: wang junwu <wjw@incartech.cn>
+Date:   Fri Jun 15 11:20:29 2018 +0800
+
+    Merge branch 'rk_master' into yk_master
+
+commit ace3b1edc147623810b8388d3430b80747484d4d
+Merge: f9835e2 202b8cf
+Author: wang junwu <wjw@incartech.cn>
+Date:   Thu Jun 14 23:29:51 2018 +0800
+
+    Merge branch 'rk_master' into yk_master
+
+commit f9835e22455a69a5226cc89674fbcf4965cd823e
+Author: dpp <dpp@incar.com>
+Date:   Wed Jun 13 14:34:01 2018 +0800
+
+    merge rk adjust opp-table for rk3326
+
+arch/arm64/boot/dts/rockchip/px30.dtsi
+arch/arm64/boot/dts/rockchip/rk3326.dtsi
+drivers/devfreq/rockchip_dmc.c
+drivers/gpu/arm/bifrost/backend/gpu/mali_kbase_devfreq.h
+drivers/gpu/arm/bifrost/mali_kbase_core_linux.c
+drivers/gpu/arm/bifrost/platform/rk/mali_kbase_config_rk.c
+drivers/soc/rockchip/rockchip_opp_select.c
+
+commit f9cff418a488458dbfb0364289cbfaf66de093f8
+Author: dpp <dpp@incar.com>
+Date:   Wed Jun 13 11:17:22 2018 +0800
+
+    请自行调节背光，默认50/255
+
+drivers/video/backlight/pwm_bl.c
+
+commit 66e6bd234f23828327a0d9013416753b5fb8514e
+Author: Liang Chen <cl@rock-chips.com>
+Date:   Mon May 21 15:51:07 2018 +0800
+
+    arm64: dts: rockchip: adjust opp-table by pvtm for px30/rk3326
+    
+    Change-Id: I0d72c313a484611ca20c0b39b21ce6d3ed85d7d4
+    Signed-off-by: Liang Chen <cl@rock-chips.com>
+
+arch/arm64/boot/dts/rockchip/px30.dtsi
+arch/arm64/boot/dts/rockchip/rk3326.dtsi
+
+commit f22de6a99bbe4a434ed9b1221563f4a1342add20
+Author: Liang Chen <cl@rock-chips.com>
+Date:   Mon May 21 15:43:38 2018 +0800
+
+    PM / devfreq: rockchip: adjust opp-table by pvtm for dmc and gpu
+    
+    Change-Id: Iec80dc04ddedbfe747dd7a9ff45e0b1a111728ac
+    Signed-off-by: Liang Chen <cl@rock-chips.com>
+
+drivers/devfreq/rockchip_dmc.c
+drivers/gpu/arm/bifrost/backend/gpu/mali_kbase_devfreq.h
+drivers/gpu/arm/bifrost/mali_kbase_core_linux.c
+drivers/gpu/arm/bifrost/platform/rk/mali_kbase_config_rk.c
+
+commit 184d2988080fb5698826d449e58233524fd771d6
+Author: Liang Chen <cl@rock-chips.com>
+Date:   Mon May 21 15:42:53 2018 +0800
+
+    soc: rockchip: opp_select: use the saved pvtm data for the same channel
+    
+    Some modules will use the same pvtm channel to adjust opp-table, do not
+    calclate pvtm data twice for the same channel.
+    
+    Change-Id: Ib8d765139821cfbdcc45bd60153d975fc80d48fa
+    Signed-off-by: Liang Chen <cl@rock-chips.com>
+
+drivers/soc/rockchip/rockchip_opp_select.c
+
+commit a1b67ad6442c6364ebdb499aa7468f0f2b4136d3
+Author: yj <yj@incartech.cn>
+Date:   Tue Jun 5 08:53:46 2018 +0800
+
+    ddr 528M
+
+arch/arm64/boot/dts/rockchip/px30.dtsi
+
+commit 71194ecfd936c4db1aa54692d61dc0bc862ed876
+Author: yj <yj@incartech.cn>
+Date:   Tue May 29 14:13:40 2018 +0800
+
+    vcc_3v0 提高到3.3V
+
+arch/arm64/boot/dts/rockchip/rk3326-863-lp3-v10.dts
+
+commit 0f2b55ee52d7966f820259ee8b8e8ef2996df3ed
+Author: yj <yj@incartech.cn>
+Date:   Mon May 28 17:57:42 2018 +0800
+
+    修改充电电流
+
+arch/arm64/boot/dts/rockchip/rk3326-863-lp3-v10.dts
+
+commit 33b786dfa25e1cbc53b15f6545fe809595e7cc1e
+Author: yj <yj@incartech.cn>
+Date:   Mon May 28 17:55:55 2018 +0800
+
+    解决概率插usb充电器无法唤醒
+
+drivers/power/rk817_charger.c
+
+commit ab91891873a002ca9fd1102309821bf8d83d413f
+Author: yj <yj@incartech.cn>
+Date:   Mon May 28 17:53:00 2018 +0800
+
+    spk-volume dts对应名字
+
+sound/soc/codecs/rk817_codec.c
+
+commit 23a7fe29cf3d931137f7be96c051e709b46c97c3
+Author: yj <yj@incartech.cn>
+Date:   Fri May 18 16:21:02 2018 +0800
+
+    优化开机速度
+
+arch/arm64/boot/dts/rockchip/px30-android.dtsi
+
+commit 202b8cfb935ecd6a6f66bca453bbff496a1647bc
+Author: Zhou weixin <zwx@rock-chips.com>
+Date:   Thu May 17 16:59:28 2018 +0800
+
+    arm64: dts: rockchip: px30-android: remove system/vendor verify
+    
+    Change-Id: I878e876c167e1a0292c46cff8fd1652747ff0d0a
+    Signed-off-by: Weixin Zhou <zwx@rock-chips.com>
+
+arch/arm64/boot/dts/rockchip/px30-android.dtsi
+
+commit f81241c87bff2432909b2768025b6d70c5b6c934
+Merge: d552c1f ccbecdb
+Author: wang junwu <wjw@incartech.cn>
+Date:   Thu May 17 14:09:07 2018 +0800
+
+    Merge branch 'rk_master' into yk_master
+
+commit ccbecdb24e39e26e1ac622ddeb0597d62a7c17ab
+Author: Tony Xie <tony.xie@rock-chips.com>
+Date:   Tue May 8 16:40:50 2018 +0800
+
+    arm64: dts: rockchip: Set pmic-reset-func to 1 for px30 and rk3326
+    
+    config reset registers only for rk817 and rk809.
+    
+    Change-Id: I761fdc891b24812de43251538b1c2af8b7c92d68
+    Signed-off-by: Tony Xie <tony.xie@rock-chips.com>
+
+arch/arm64/boot/dts/rockchip/px30-evb-ddr3-v10.dts
+arch/arm64/boot/dts/rockchip/px30-evb-ddr4-v10.dts
+arch/arm64/boot/dts/rockchip/rk3326-863-lp3-v10.dts
+arch/arm64/boot/dts/rockchip/rk3326-evb-lp3-v10.dts
+
+commit 879e1fd956ecb763989456146ed8b2e6cb527c29
+Author: Wu Liangqing <wlq@rock-chips.com>
+Date:   Tue May 8 12:00:04 2018 +0800
+
+    arm64: dts: rockchip: px30: set vccio regulator min microvolt to 1.8v
+    
+    Change-Id: If3dd897b1fa62a8e5bed30fadc7c755fdbd90103
+    Signed-off-by: Wu Liangqing <wlq@rock-chips.com>
+
+arch/arm64/boot/dts/rockchip/px30-evb-ddr3-v10.dts
+arch/arm64/boot/dts/rockchip/px30-evb-ddr4-v10.dts
+arch/arm64/boot/dts/rockchip/rk3326-863-lp3-v10.dts
+arch/arm64/boot/dts/rockchip/rk3326-evb-linux-lp3-v10.dts
+arch/arm64/boot/dts/rockchip/rk3326-evb-lp3-v10.dts
+
+commit ecf8b13fc9ece916d023a8566902893a2f936c12
+Author: Zhang Yunlong <dalon.zhang@rock-chips.com>
+Date:   Tue May 8 11:43:44 2018 +0800
+
+    soc: rockchip: rk_camera: reduce the code risk
+    
+    below code would cause endless loop when regulator is set 'always-on':
+    
+    while (regulator_is_enabled(ldo_18) > 0)
+        regulator_disable(ldo_18);
+    
+    Change-Id: Ia3b6f72969ada774a1cf6a46a20ec9b3efb841a0
+    Signed-off-by: Zhang Yunlong <dalon.zhang@rock-chips.com>
+
+drivers/soc/rockchip/rk_camera.c
+
+commit 27b13c58399139d091539ebfa28d467f58226d2b
+Author: Zhang Yunlong <dalon.zhang@rock-chips.com>
+Date:   Tue May 8 11:13:12 2018 +0800
+
+    media: soc_camera: power/power-off should be pair called in soc_camera_probe
+    
+    Change-Id: I67c9fd6578be02a405897e75b6d18bcb9d33f150
+    Signed-off-by: Zhang Yunlong <dalon.zhang@rock-chips.com>
+
+drivers/media/platform/soc_camera/soc_camera.c
+
+commit 9c36782de7a44987464f3fa8fd3779b5e7d240d1
+Author: Yifeng Zhao <zyf@rock-chips.com>
+Date:   Mon Apr 23 14:17:40 2018 +0800
+
+    drivers: rk_nand: fix SPOR data lost issue
+    
+    Suddenly power loss test for F2FS file system，data will be
+    lost and the file system count not mount.
+    bug:
+    [    6.372692] F2FS-fs (rknand_userdata): Found nat_bits in checkpoint
+    [    6.563942] F2FS-fs (rknand_userdata): Failed to read root inode
+    [    6.607687] F2FS-fs (rknand_userdata): Found nat_bits in checkpoint
+    [    6.799042] F2FS-fs (rknand_userdata): Failed to read root inode
+    
+    Change-Id: Ie3256631eba4388cef9edec31aea12bfd45bf4d4
+    Signed-off-by: Yifeng Zhao <zyf@rock-chips.com>
+
+drivers/rk_nand/rk_ftl_arm_v7.S
+
+commit d552c1fdbe46075d2e65ac8787b3a7776dbd02d2
+Author: yj <yj@incartech.cn>
+Date:   Wed May 9 14:12:34 2018 +0800
+
+    863 10cun 216x2 base version
+
+arch/arm64/boot/dts/rockchip/px30-android.dtsi
+arch/arm64/boot/dts/rockchip/px30.dtsi
+arch/arm64/boot/dts/rockchip/rk3326-863-cif-sensor.dtsi
+arch/arm64/boot/dts/rockchip/rk3326-863-lp3-v10.dts
+arch/arm64/configs/rk3326_yk_defconfig
+drivers/input/sensors/accel/Kconfig
+drivers/input/sensors/accel/Makefile
+drivers/input/sensors/accel/sc7660.c
+drivers/input/sensors/accel/sc7a20.c
+drivers/input/sensors/sensor-dev.c
+drivers/input/touchscreen/gsl3673_800x1280.c
+drivers/input/touchscreen/rochkchip_gslX680_8inch_800x1280_tg806.h
+drivers/input/touchscreen/rockchip_863_gsl1680_8inch_800x1280_HaoYuan_NEW.h
+drivers/media/platform/soc_camera/soc_camera.c
+drivers/media/video/Makefile
+drivers/media/video/sp0a19.c
+drivers/media/video/sp2519.c
+drivers/soc/rockchip/rk_camera.c
+drivers/soc/rockchip/rk_camera_sensor_info.h
+include/linux/sensor-dev.h
+include/media/v4l2-chip-ident.h
+make_kernel.sh
+scripts/gcc-wrapper.py
+sound/soc/codecs/rk817_codec.c
+
+commit 3999c09440df0f20f0f284da28c418636edecca3
+Author: wang junwu <wjw@incartech.cn>
+Date:   Mon May 7 19:49:25 2018 +0800
+
+    添加64位config
+
+arch/arm64/configs/rk3326_yk_defconfig
+
+commit 76d25bd959d557cb8d9375e658db50a55dc9552f
+Author: wang junwu <wjw@incartech.cn>
+Date:   Mon May 7 19:07:36 2018 +0800
+
+    modify forall make kernel
+
+arch/arm/configs/rk3326_yk_defconfig
+make_kernel.sh
+
+commit 07f458d2660b28fc7e91345b1e2817cd174d0efb
+Author: wlq <wlq@rock-chips.com>
+Date:   Sat May 5 11:58:45 2018 +0800
+
+    Revert "arm64: dts: rockchip: add soc_bus support for px30."
+    
+    This reverts commit 486b9941997a6edf7fdf173c0d13e503c859f284.
+
+arch/arm64/boot/dts/rockchip/px30.dtsi
+
+commit 57da81b29f59b0a7cf347befdf8dba433b589529
+Author: Tao Huang <huangtao@rock-chips.com>
+Date:   Fri May 4 20:06:11 2018 +0800
+
+    PM / devfreq: rockchip_dmc: make rockchip_find_video_info static
+    
+    Change-Id: I13eb60038410592dc1eab14cf3db8f30d01fc56b
+    Signed-off-by: Tao Huang <huangtao@rock-chips.com>
+
+drivers/devfreq/rockchip_dmc.c
+
+commit 7cccd28135d9055400db571c29521bc5e8d4ac27
+Author: Bin Yang <yangbin@rock-chips.com>
+Date:   Wed May 2 14:23:48 2018 +0800
+
+    input: touchscreen: gslx680: compatible with more TP
+    
+    Each product needs to create a new driver code, even if
+    they are using the same TP chip. This creates a lot of
+    code redundant.
+    
+    Change-Id: I3d7d9982d98deba0ea4067c9adb76fe2a09ab659
+    Signed-off-by: Bin Yang <yangbin@rock-chips.com>
+
+drivers/input/touchscreen/gslx680.c
+drivers/input/touchscreen/gslx680.h
+
+commit 0984fde1d78196fb4516521866a08bd304496f81
+Author: Elaine Zhang <zhangqing@rock-chips.com>
+Date:   Wed Apr 25 15:47:36 2018 +0800
+
+    soc: rockchip: power-domain: add panic when wait status timeout
+    
+    Change-Id: Ic0ce83068091313942f9277ba56abffa525da1d2
+    Signed-off-by: Elaine Zhang <zhangqing@rock-chips.com>
+
+drivers/soc/rockchip/pm_domains.c
+
+commit 8373cf713ddd32037dc86462cac2d2d3cc859a99
+Author: Randy Li <randy.li@rock-chips.com>
+Date:   Fri Apr 20 10:43:46 2018 +0800
+
+    clk: rockchip: rk3036: export the sfc clocks
+    
+    The serial Flash controller on the rk3036 would request
+    two clock nodes.
+    
+    Change-Id: Iaa50c4a25602a68241b0b9b2f186e4c7e55bc3da
+    Signed-off-by: Randy Li <randy.li@rock-chips.com>
+
+drivers/clk/rockchip/clk-rk3036.c
+include/dt-bindings/clock/rk3036-cru.h
+
+commit 8a4fa02d9d529b5a9fd7d45ff674221e971aa7a3
+Author: Binyuan Lan <lby@rock-chips.com>
+Date:   Fri May 4 18:45:03 2018 +0800
+
+    arm64: dts: rockchip: Enable dmc for rk3326-evb-ai-va
+    
+    Change-Id: I83ff4a926aef6b11107b9a3723a425bb450b8b9e
+    Signed-off-by: Binyuan Lan <lby@rock-chips.com>
+
+arch/arm64/boot/dts/rockchip/rk3326-evb-ai-va-v10.dts
+
+commit 3e49f3aec4e67da03280577d49a3648bbdedb922
+Author: Sugar Zhang <sugar.zhang@rock-chips.com>
+Date:   Sat Mar 31 14:45:57 2018 +0800
+
+    arm64: dts: rockchip: px30: fixup i2s0 node
+    
+    Change-Id: Ibf4f59d2f85dad9e7343d9d02c723891a5b7adbd
+    Signed-off-by: Sugar Zhang <sugar.zhang@rock-chips.com>
+
+arch/arm64/boot/dts/rockchip/px30.dtsi
+
+commit 2d32260be1bc27b2f72bc52556d231cf11d3f4c9
+Author: Tao Huang <huangtao@rock-chips.com>
+Date:   Thu May 3 16:06:18 2018 +0800
+
+    arm64: rockchip_defconfig: update by savedefconfig
+    
+    Change-Id: Ia05e25f8c7e9675260e5417bce503937ce0cea2f
+    Signed-off-by: Tao Huang <huangtao@rock-chips.com>
+
+arch/arm64/configs/rockchip_defconfig
+
+commit e6d758f352dcd93d4a724132df21dccb5f259b81
+Author: Joseph Chen <chenjh@rock-chips.com>
+Date:   Thu May 3 09:14:37 2018 +0800
+
+    soc: rockchip: fiq debugger: rename notify callbacks
+    
+    1. rename callbacks to make them more clearly to be understood;
+    2. add description for intention;
+    
+    Change-Id: Ic0e28aa98793495c01f531331e9d5dc816ee0820
+    Signed-off-by: Joseph Chen <chenjh@rock-chips.com>
+
+drivers/soc/rockchip/rk_fiq_debugger.c
+
+commit daa327cbb0d04502ff6a7ac20b0de8041499f9f9
+Author: shengfei Xu <xsf@rock-chips.com>
+Date:   Thu May 3 15:03:15 2018 +0800
+
+    power: rk817-battery: improve the storage accuracy of dsoc
+    
+    The save dosc accuracy is not enough to cause the display soc
+    to be reduced by 1 when system reboot.
+    
+    Change-Id: Iefd29a0ce16b9975be3d90260d1793ba322db303
+    Signed-off-by: shengfei Xu <xsf@rock-chips.com>
+
+drivers/power/rk817_battery.c
+drivers/power/rk817_charger.c
+
+commit dfb23b60727a7cf1703b1ab4ce0f474faf65b9b1
+Author: Zhou weixin <zwx@rock-chips.com>
+Date:   Thu May 3 11:49:06 2018 +0800
+
+    arm64: dts: rockchip: disable kpti for px30
+    
+    The cpu will block if the CONFIG_RANDOMIZE_BASE\rockchip-dmc\kpti
+    are enabled, and the kpti will reduced system performance.
+    
+    Change-Id: Icd054a4a9cbbea20bd8f8c33a6db64c6fd304fd0
+    Signed-off-by: Weixin Zhou <zwx@rock-chips.com>
+
+arch/arm64/boot/dts/rockchip/px30-android.dtsi
+
+commit 418662ad197f39debeec747c73bdf534583b8452
+Author: Yu YongZhen <yuyz@rock-chips.com>
+Date:   Thu May 3 19:47:40 2018 +0800
+
+    arm64: dts: rockchip: rk3308-evb-amic-v10: fix is31fl3236 reg to 0x3f
+    
+    Change-Id: I961f0fab7c6af8e357bb95c7d30ca2e9f5702f90
+    Signed-off-by: Yu YongZhen <yuyz@rock-chips.com>
+
+arch/arm64/boot/dts/rockchip/rk3308-evb-amic-v10.dts
+
+commit 3a13a2ae5203244fd688a0e6fdf8c31a0a0ca513
+Author: XiaoDong Huang <derrick.huang@rock-chips.com>
+Date:   Thu May 3 11:51:37 2018 +0800
+
+    arm64: dts: rockchip: px30: disable cpu CLUSTER_SLEEP
+    
+    Change-Id: I240d47f2c8f665af9d2b4c0cc87bf70ecd420bc4
+    Signed-off-by: XiaoDong Huang <derrick.huang@rock-chips.com>
+
+arch/arm64/boot/dts/rockchip/px30.dtsi
+
+commit c71109b38b46f6be47b51985eb8f8dd2b0ceed36
+Author: Tony Xie <tony.xie@rock-chips.com>
+Date:   Thu Apr 26 10:54:55 2018 +0800
+
+    arm64: configs: rockchip_defconfig: enable CONFIG_ARM_ROCKCHIP_BUS_DEVFREQ
+    
+    Change-Id: I37ff6d6a689f74f907500f3611e5e0c8107b7d56
+    Signed-off-by: Tony Xie <tony.xie@rock-chips.com>
+
+arch/arm64/configs/rockchip_defconfig
+
+commit 486b9941997a6edf7fdf173c0d13e503c859f284
+Author: Tony Xie <tony.xie@rock-chips.com>
+Date:   Mon Apr 23 19:21:44 2018 +0800
+
+    arm64: dts: rockchip: add soc_bus support for px30.
+    
+    Change-Id: I22c0865b2624c43e2b338dd055c266b4562c8213
+    Signed-off-by: Tony Xie <tony.xie@rock-chips.com>
+
+arch/arm64/boot/dts/rockchip/px30.dtsi
+
+commit b66148ef0d46071b8078332c90637ec21aae5c3e
+Author: Tony Xie <tony.xie@rock-chips.com>
+Date:   Mon Apr 23 18:03:48 2018 +0800
+
+    PM / devfreq: rockchip_bus: support soc bus devfreq.
+    
+    Change-Id: Iba750d4522b99e88c16c8e4a77d3367fbb2a0d82
+    Signed-off-by: Tony Xie <tony.xie@rock-chips.com>
+
+drivers/devfreq/Kconfig
+drivers/devfreq/Makefile
+drivers/devfreq/rockchip_bus.c
+drivers/firmware/rockchip_sip.c
+include/linux/rockchip/rockchip_sip.h
+
+commit 501046621dc99cee05f6345069d44dd15cc680cd
+Author: Cliff Chen <cliff.chen@rock-chips.com>
+Date:   Wed May 2 09:31:40 2018 +0800
+
+    crypto: fix NEON bit sliced AES decryption error
+    
+    The Neon bit sliced AES decryption store the key schedule in BS_KEY struct,
+    it introduces a competitive risk，such as dm-crypt without samecpu option.
+    So backport from linux stable version 4.14.13.
+    
+    Change-Id: I8c728669ae626f56b38c24ed391aa3078a60f623
+    Signed-off-by: Cliff Chen <cliff.chen@rock-chips.com>
+
+arch/arm/crypto/Makefile
+arch/arm/crypto/aes-neonbs-core.S
+arch/arm/crypto/aesbs-glue.c
+
+commit 015775bc7996e6536d610f3431936cf022bf26d8
+Author: Sugar Zhang <sugar.zhang@rock-chips.com>
+Date:   Wed May 2 19:52:20 2018 +0800
+
+    clk: rockchip: rk3308: fixup clk_audio_src
+    
+    Change-Id: I83cc0f1260e101681746c3847e1ec046d596fd7c
+    Signed-off-by: Sugar Zhang <sugar.zhang@rock-chips.com>
+
+drivers/clk/rockchip/clk-rk3308.c
+
+commit cfb4b8e9b2701bf9e56b134fec7d1b3f52014db8
+Author: Xing Zheng <zhengxing@rock-chips.com>
+Date:   Sat Apr 28 19:52:43 2018 +0800
+
+    ASoC: rk3308_codec: fix the incorrect description for ADC1/ADC2
+    
+    From the broken spec from vendor, the PGA GAIN description
+    for MIC-IN should be like this:
+     * 0x0 - MIC1~MIC8 0dB
+     * 0x1 - MIC1~MIC2 are invalid, MIC3~MIC8 6.6dB
+     * 0x2 - MIC1~MIC2 are invalid, MIC3~MIC8 13dB
+     * 0x3 - MIC1~MIC8 20dB
+    
+    Therefore, we need to update the MIC-INs dapm controls:
+    
+    - MIC1 / MIC2:
+    numid=25,iface=MIXER,name='ADC MIC Group 0 Left Volume'
+      ; type=INTEGER,access=rw---R--,values=1,min=0,max=3,step=0
+      : values=0
+      | dBrange-
+        rangemin=0,,rangemax=0
+          | dBminmax-min=0.00dB,max=0.00dB
+        rangemin=3,,rangemax=3
+          | dBminmax-min=20.00dB,max=20.00dB
+    
+    - MIC3 ~ MIC8:
+    numid=27,iface=MIXER,name='ADC MIC Group 1 Left Volume'
+      ; type=INTEGER,access=rw---R--,values=1,min=0,max=3,step=0
+      : values=0
+      | dBrange-
+        rangemin=0,,rangemax=0
+          | dBminmax-min=0.00dB,max=0.00dB
+        rangemin=1,,rangemax=1
+          | dBminmax-min=6.60dB,max=6.60dB
+        rangemin=2,,rangemax=2
+          | dBminmax-min=13.00dB,max=13.00dB
+        rangemin=3,,rangemax=3
+          | dBminmax-min=20.00dB,max=20.00dB
+    
+    Change-Id: I977179fdf33d6bb7e27708baef37cc308c3d0a71
+    Signed-off-by: Xing Zheng <zhengxing@rock-chips.com>
+
+sound/soc/codecs/rk3308_codec.c
+sound/soc/codecs/rk3308_codec.h
+
+commit 686e6dfc50efc8bbbd8723241af807d0ff533d79
+Author: Tony Xie <tony.xie@rock-chips.com>
+Date:   Sat Apr 28 15:08:10 2018 +0800
+
+    regulator: rk808: DCDC_REG5 registers early.
+    
+    If a regulator is supplied by the DCDC_REG5, and the regulator registers
+    behind the DCDC_REG5, then some devices can not have the regulator_get()
+    because the regulator has not get its suplly. The case happen in
+    rdev_init_debugfs() typically.
+    
+    Change-Id: I02e336ad97e956c53351ca18af6c651126b3149d
+    Signed-off-by: Tony Xie <tony.xie@rock-chips.com>
+
+drivers/regulator/rk808-regulator.c
+
+commit ffc12e054cb317ccd44facf046b259ce2da204de
+Author: David Wu <david.wu@rock-chips.com>
+Date:   Wed May 2 15:26:52 2018 +0800
+
+    i2c: rk3x: Add "suspended" flag to forbid access I2C bus during suspend/resume noirq
+    
+    Add "suspended" flag in suspend_noirq()/resume_noirq() callback
+    to prevent new i2c job started, and use i2c_lock_adapter() to wait
+    for current i2c transfer finished.
+    
+    If any i2c client try to access I2C after suspend_noirq() or
+    before resume_noirq() callback, return the error, and they
+    should fix it, not to start i2c access at this moment.
+    
+    Change-Id: Idd1142058d10547d085895a498201c2ade6b9e96
+    Signed-off-by: David Wu <david.wu@rock-chips.com>
+
+drivers/i2c/busses/i2c-rk3x.c
+
+commit 91842c9d8b4f21a431643d97269d142d9524cd9a
+Author: chenzhen <chenzhen@rock-chips.com>
+Date:   Fri Jan 6 18:12:50 2017 +0800
+
+    MALI: rockchip: upgrade midgard DDK to r18p0-01rel0
+    
+    with following modifications :
+    	fix some compile errors when ARCH=arm;
+    	replace "mali_base" with "midgard_base" in Kbuild files;
+    	fix a compile error when MALI_PWRSOFT_765 enabled;
+    	set "default n" for MALI_KUTF and MALI_IRQ_LATENCY.
+    
+    Change-Id: I858c72aab939002c8e6241cd75fa8877ebbf6c35
+    Signed-off-by: Zhen Chen <chenzhen@rock-chips.com>
+
+Documentation/devicetree/bindings/arm/mali-midgard.txt
+Documentation/devicetree/bindings/power/mali-opp.txt
+drivers/gpu/arm/midgard/Kbuild
+drivers/gpu/arm/midgard/Kconfig
+drivers/gpu/arm/midgard/Makefile
+drivers/gpu/arm/midgard/backend/gpu/Kbuild
+drivers/gpu/arm/midgard/backend/gpu/mali_kbase_devfreq.c
+drivers/gpu/arm/midgard/backend/gpu/mali_kbase_gpuprops_backend.c
+drivers/gpu/arm/midgard/backend/gpu/mali_kbase_jm_as.c
+drivers/gpu/arm/midgard/backend/gpu/mali_kbase_jm_hw.c
+drivers/gpu/arm/midgard/backend/gpu/mali_kbase_jm_internal.h
+drivers/gpu/arm/midgard/backend/gpu/mali_kbase_jm_rb.c
+drivers/gpu/arm/midgard/backend/gpu/mali_kbase_js_backend.c
+drivers/gpu/arm/midgard/backend/gpu/mali_kbase_mmu_hw_direct.c
+drivers/gpu/arm/midgard/backend/gpu/mali_kbase_pm_backend.c
+drivers/gpu/arm/midgard/backend/gpu/mali_kbase_pm_ca.c
+drivers/gpu/arm/midgard/backend/gpu/mali_kbase_pm_ca_devfreq.c
+drivers/gpu/arm/midgard/backend/gpu/mali_kbase_pm_ca_devfreq.h
+drivers/gpu/arm/midgard/backend/gpu/mali_kbase_pm_defs.h
+drivers/gpu/arm/midgard/backend/gpu/mali_kbase_pm_driver.c
+drivers/gpu/arm/midgard/backend/gpu/mali_kbase_pm_internal.h
+drivers/gpu/arm/midgard/backend/gpu/mali_kbase_pm_metrics.c
+drivers/gpu/arm/midgard/backend/gpu/mali_kbase_pm_policy.c
+drivers/gpu/arm/midgard/backend/gpu/mali_kbase_power_model_simple.c
+drivers/gpu/arm/midgard/backend/gpu/mali_kbase_power_model_simple.h
+drivers/gpu/arm/midgard/ipa/Kbuild
+drivers/gpu/arm/midgard/ipa/mali_kbase_ipa.c
+drivers/gpu/arm/midgard/ipa/mali_kbase_ipa.h
+drivers/gpu/arm/midgard/ipa/mali_kbase_ipa_debugfs.c
+drivers/gpu/arm/midgard/ipa/mali_kbase_ipa_debugfs.h
+drivers/gpu/arm/midgard/ipa/mali_kbase_ipa_simple.c
+drivers/gpu/arm/midgard/mali_base_hwconfig_features.h
+drivers/gpu/arm/midgard/mali_base_hwconfig_issues.h
+drivers/gpu/arm/midgard/mali_base_kernel.h
+drivers/gpu/arm/midgard/mali_base_kernel_sync.h
+drivers/gpu/arm/midgard/mali_kbase.h
+drivers/gpu/arm/midgard/mali_kbase_10969_workaround.c
+drivers/gpu/arm/midgard/mali_kbase_config_defaults.h
+drivers/gpu/arm/midgard/mali_kbase_context.c
+drivers/gpu/arm/midgard/mali_kbase_core_linux.c
+drivers/gpu/arm/midgard/mali_kbase_ctx_sched.c
+drivers/gpu/arm/midgard/mali_kbase_ctx_sched.h
+drivers/gpu/arm/midgard/mali_kbase_debug_job_fault.c
+drivers/gpu/arm/midgard/mali_kbase_debug_mem_view.c
+drivers/gpu/arm/midgard/mali_kbase_defs.h
+drivers/gpu/arm/midgard/mali_kbase_device.c
+drivers/gpu/arm/midgard/mali_kbase_dma_fence.c
+drivers/gpu/arm/midgard/mali_kbase_dma_fence.h
+drivers/gpu/arm/midgard/mali_kbase_event.c
+drivers/gpu/arm/midgard/mali_kbase_fence.c
+drivers/gpu/arm/midgard/mali_kbase_fence.h
+drivers/gpu/arm/midgard/mali_kbase_fence_defs.h
+drivers/gpu/arm/midgard/mali_kbase_gator_api.c
+drivers/gpu/arm/midgard/mali_kbase_gator_hwcnt_names.h
+drivers/gpu/arm/midgard/mali_kbase_gator_hwcnt_names_tsix.h
+drivers/gpu/arm/midgard/mali_kbase_gpu_id.h
+drivers/gpu/arm/midgard/mali_kbase_gpuprops.c
+drivers/gpu/arm/midgard/mali_kbase_gpuprops.h
+drivers/gpu/arm/midgard/mali_kbase_gpuprops_types.h
+drivers/gpu/arm/midgard/mali_kbase_hw.c
+drivers/gpu/arm/midgard/mali_kbase_hw.h
+drivers/gpu/arm/midgard/mali_kbase_hwaccess_jm.h
+drivers/gpu/arm/midgard/mali_kbase_ioctl.h
+drivers/gpu/arm/midgard/mali_kbase_ipa.c
+drivers/gpu/arm/midgard/mali_kbase_ipa.h
+drivers/gpu/arm/midgard/mali_kbase_ipa_tables.h
+drivers/gpu/arm/midgard/mali_kbase_jd.c
+drivers/gpu/arm/midgard/mali_kbase_jd_debugfs.c
+drivers/gpu/arm/midgard/mali_kbase_jd_debugfs.h
+drivers/gpu/arm/midgard/mali_kbase_js.c
+drivers/gpu/arm/midgard/mali_kbase_js.h
+drivers/gpu/arm/midgard/mali_kbase_js_ctx_attr.c
+drivers/gpu/arm/midgard/mali_kbase_js_defs.h
+drivers/gpu/arm/midgard/mali_kbase_js_policy.h
+drivers/gpu/arm/midgard/mali_kbase_js_policy_cfs.c
+drivers/gpu/arm/midgard/mali_kbase_js_policy_cfs.h
+drivers/gpu/arm/midgard/mali_kbase_mem.c
+drivers/gpu/arm/midgard/mali_kbase_mem.h
+drivers/gpu/arm/midgard/mali_kbase_mem_linux.c
+drivers/gpu/arm/midgard/mali_kbase_mem_linux.h
+drivers/gpu/arm/midgard/mali_kbase_mem_lowlevel.h
+drivers/gpu/arm/midgard/mali_kbase_mem_pool.c
+drivers/gpu/arm/midgard/mali_kbase_mem_profile_debugfs.c
+drivers/gpu/arm/midgard/mali_kbase_mmu.c
+drivers/gpu/arm/midgard/mali_kbase_mmu_mode.h
+drivers/gpu/arm/midgard/mali_kbase_mmu_mode_aarch64.c
+drivers/gpu/arm/midgard/mali_kbase_mmu_mode_lpae.c
+drivers/gpu/arm/midgard/mali_kbase_softjobs.c
+drivers/gpu/arm/midgard/mali_kbase_sync.c
+drivers/gpu/arm/midgard/mali_kbase_sync.h
+drivers/gpu/arm/midgard/mali_kbase_sync_android.c
+drivers/gpu/arm/midgard/mali_kbase_sync_common.c
+drivers/gpu/arm/midgard/mali_kbase_sync_file.c
+drivers/gpu/arm/midgard/mali_kbase_sync_user.c
+drivers/gpu/arm/midgard/mali_kbase_tlstream.c
+drivers/gpu/arm/midgard/mali_kbase_tlstream.h
+drivers/gpu/arm/midgard/mali_kbase_uku.h
+drivers/gpu/arm/midgard/mali_kbase_vinstr.c
+drivers/gpu/arm/midgard/mali_midg_regmap.h
+drivers/gpu/arm/midgard/platform/devicetree/Kbuild
+drivers/gpu/arm/midgard/platform/devicetree/mali_kbase_config_platform.h
+drivers/gpu/arm/midgard/platform/juno_soc/Kbuild
+drivers/gpu/arm/midgard/platform/juno_soc/juno_mali_opp.c
+drivers/gpu/arm/midgard/platform/juno_soc/mali_kbase_config_juno_soc.c
+drivers/gpu/arm/midgard/platform/juno_soc/mali_kbase_config_platform.h
+drivers/gpu/arm/midgard/platform/rk/Kbuild
+drivers/gpu/arm/midgard/platform/vexpress/Kbuild
+drivers/gpu/arm/midgard/platform/vexpress/mali_kbase_config_platform.h
+drivers/gpu/arm/midgard/platform/vexpress_1xv7_a57/Kbuild
+drivers/gpu/arm/midgard/platform/vexpress_1xv7_a57/mali_kbase_config_platform.h
+drivers/gpu/arm/midgard/platform/vexpress_6xvirtex7_10mhz/Kbuild
+drivers/gpu/arm/midgard/platform/vexpress_6xvirtex7_10mhz/mali_kbase_config_platform.h
+drivers/gpu/arm/midgard/protected_mode_switcher.h
+drivers/gpu/arm/midgard/sconscript
+drivers/gpu/arm/midgard/tests/Kbuild
+drivers/gpu/arm/midgard/tests/Kconfig
+drivers/gpu/arm/midgard/tests/include/kutf/kutf_mem.h
+drivers/gpu/arm/midgard/tests/include/kutf/kutf_resultset.h
+drivers/gpu/arm/midgard/tests/include/kutf/kutf_suite.h
+drivers/gpu/arm/midgard/tests/include/kutf/kutf_utils.h
+drivers/gpu/arm/midgard/tests/kutf/Kbuild
+drivers/gpu/arm/midgard/tests/kutf/Kconfig
+drivers/gpu/arm/midgard/tests/kutf/Makefile
+drivers/gpu/arm/midgard/tests/kutf/kutf_mem.c
+drivers/gpu/arm/midgard/tests/kutf/kutf_resultset.c
+drivers/gpu/arm/midgard/tests/kutf/kutf_suite.c
+drivers/gpu/arm/midgard/tests/kutf/kutf_utils.c
+drivers/gpu/arm/midgard/tests/kutf/sconscript
+drivers/gpu/arm/midgard/tests/mali_kutf_irq_test/Kbuild
+drivers/gpu/arm/midgard/tests/mali_kutf_irq_test/Kconfig
+drivers/gpu/arm/midgard/tests/mali_kutf_irq_test/Makefile
+drivers/gpu/arm/midgard/tests/mali_kutf_irq_test/mali_kutf_irq_test_main.c
+drivers/gpu/arm/midgard/tests/mali_kutf_irq_test/sconscript
+drivers/gpu/arm/midgard/tests/sconscript
+
+commit 17138ba2586367a573ccbf00de294634053f28e3
+Author: Sugar Zhang <sugar.zhang@rock-chips.com>
+Date:   Wed May 2 14:33:44 2018 +0800
+
+    arm64: dts: rockchip: rk3308-evb-dmic-pdm-v10: add pdm-vad sound
+    
+    Change-Id: Ideed6aa1961396206ba7b55fcbcdd392d59e92e4
+    Signed-off-by: Sugar Zhang <sugar.zhang@rock-chips.com>
+
+arch/arm64/boot/dts/rockchip/rk3308-evb-dmic-pdm-v10.dts
+
+commit d25bfd1af97784e2127d96858630464a50f5105e
+Author: Sugar Zhang <sugar.zhang@rock-chips.com>
+Date:   Mon Mar 26 21:07:26 2018 +0800
+
+    arm64: dts: rockchip: rk3308-evb-dmic-i2s-v10: add i2s-vad sound
+    
+    Change-Id: I52f0312327547827a6bd72f68f5ba98cbe3abc83
+    Signed-off-by: Sugar Zhang <sugar.zhang@rock-chips.com>
+
+arch/arm64/boot/dts/rockchip/rk3308-evb-dmic-i2s-v10.dts
+
+commit a260f656a49075a0f317b303fdf4af87408ab57d
+Author: Sugar Zhang <sugar.zhang@rock-chips.com>
+Date:   Wed May 2 14:32:37 2018 +0800
+
+    ASoC: rockchip: pdm: add default regs
+    
+    Change-Id: I0453d04c035b8b6d6f084b5bac434ada64ea6e73
+    Signed-off-by: Sugar Zhang <sugar.zhang@rock-chips.com>
+
+sound/soc/rockchip/rockchip_pdm.c
+
+commit a8affcb41988e2c1a84d0aadccd94f41aadca4cb
+Author: Sugar Zhang <sugar.zhang@rock-chips.com>
+Date:   Wed May 2 14:02:30 2018 +0800
+
+    ASoC: rockchip: vad: fixup total channel num
+    
+    Change-Id: I88fcde558d48d39d8ea75ac564e1f9fcd8588efd
+    Signed-off-by: Sugar Zhang <sugar.zhang@rock-chips.com>
+
+sound/soc/rockchip/rockchip_vad.c
+
+commit 4f2a3c9ff9a08a3c10cf8980c1d5b6519e0659bf
+Author: Finley Xiao <finley.xiao@rock-chips.com>
+Date:   Sat Apr 28 16:56:47 2018 +0800
+
+    regulator: core: Update voltage only when other consumer set min_uV or max_uV
+    
+    Change-Id: I95655978680610d47b8078a5f9c2fd8794f478b2
+    Signed-off-by: Finley Xiao <finley.xiao@rock-chips.com>
+
+drivers/regulator/core.c
+
+commit 7690fe3886ca4c54055dbd2bf4af688213ebf07e
+Author: Algea Cao <algea.cao@rock-chips.com>
+Date:   Sat Apr 28 10:46:51 2018 +0800
+
+    drm/rockchip: tve: Get tve preferred mode from dts
+    
+    Change-Id: I597328fd9a02ffd774d452497ae378c9d8204a21
+    Signed-off-by: Algea Cao <algea.cao@rock-chips.com>
+
+Documentation/devicetree/bindings/display/rockchip/rockchip_drm_tve.txt
+drivers/gpu/drm/rockchip/rockchip_drm_tve.c
+drivers/gpu/drm/rockchip/rockchip_drm_tve.h
+
+commit c917c8e6c287a9566bbe37e3c22edf2ba3ceff98
+Author: Sugar Zhang <sugar.zhang@rock-chips.com>
+Date:   Fri Apr 27 16:33:37 2018 +0800
+
+    arm64: dts: rockchip: rk3308-evb-amic-v10: add vad-acodec sound
+    
+    Change-Id: Ic1c82db03d6e0fe3e0f7caf52717879f80e0eefc
+    Signed-off-by: Sugar Zhang <sugar.zhang@rock-chips.com>
+
+arch/arm64/boot/dts/rockchip/rk3308-evb-amic-v10.dts
+
+commit 162ecad769980b21ee4e765381ffed07a66cbc61
+Author: Sugar Zhang <sugar.zhang@rock-chips.com>
+Date:   Fri Apr 27 16:27:36 2018 +0800
+
+    arm64: dts: rockchip: rk3308-evb-v10: add alias for acodec sound
+    
+    Change-Id: I895c490f419760a176af993867106af7faf73b3d
+    Signed-off-by: Sugar Zhang <sugar.zhang@rock-chips.com>
+
+arch/arm64/boot/dts/rockchip/rk3308-evb-v10.dtsi
+
+commit 694fdd8cba3a98082e0d4b2d68d53234b92e2b10
+Author: Sugar Zhang <sugar.zhang@rock-chips.com>
+Date:   Fri Apr 27 13:40:24 2018 +0800
+
+    ALSA: pcm: add support for vad
+    
+    Change-Id: I092ee1fb4b5e8c621cc00fc5c57a147eec23ea08
+    Signed-off-by: Sugar Zhang <sugar.zhang@rock-chips.com>
+
+sound/core/pcm_lib.c
+
+commit 2372a650914e05905969488dd9520b60c3a74310
+Author: Sugar Zhang <sugar.zhang@rock-chips.com>
+Date:   Fri Apr 27 15:13:03 2018 +0800
+
+    arm64: configs: rk3308_linux_defconfig: enable vad
+    
+    Change-Id: I6ae2c80e5c83a02929f8fecacad98274389605ee
+    Signed-off-by: Sugar Zhang <sugar.zhang@rock-chips.com>
+
+arch/arm64/configs/rk3308_linux_defconfig
+
+commit dc6319ec6fab8dd0a243a3aa14a08d8a47cd5b51
+Author: Sugar Zhang <sugar.zhang@rock-chips.com>
+Date:   Fri Apr 27 14:57:36 2018 +0800
+
+    arm64: dts: rockchip: rk3308: remove unused property for vad
+    
+    Change-Id: I37c48be7c47834a0157be5a5136cf691e0301bcb
+    Signed-off-by: Sugar Zhang <sugar.zhang@rock-chips.com>
+
+arch/arm64/boot/dts/rockchip/rk3308.dtsi
+
+commit f9cbc2829b33da1f203eba2147782d495a5976e0
+Author: Sugar Zhang <sugar.zhang@rock-chips.com>
+Date:   Fri Apr 27 11:18:36 2018 +0800
+
+    ASoC: rockchip: add support for vad
+    
+    This patch add support for rockchip voice activity detection.
+    The vad is used to detect the amplitude of voice which is
+    received by analog mic, i2s digital mic or pdm digital mic
+    when soc is in low power mode. if the amplitude of voice is
+    over threshold, the vad will assert interrupt to wake up soc,
+    then soc will exit low power mode.
+    
+    Change-Id: Idb7a3adb87ec4c07274eefd82da4672d493c7627
+    Signed-off-by: Sugar Zhang <sugar.zhang@rock-chips.com>
+
+Documentation/devicetree/bindings/sound/rockchip,vad.txt
+include/sound/pcm.h
+sound/soc/rockchip/Kconfig
+sound/soc/rockchip/Makefile
+sound/soc/rockchip/rockchip_vad.c
+sound/soc/rockchip/rockchip_vad.h
+
+commit d5f0ca9988c79c995d429e77897a9f6b1e72c1bb
+Author: Xu Xuehui <xxh@rock-chips.com>
+Date:   Sat Apr 28 10:52:28 2018 +0800
+
+    ARM64: dts: rk3328-evb-android: decrease frequency sdio clk to 125M
+    
+    Change-Id: I3cbbdbdcd97b18ec099a766ed3e08e8514f4932f
+    Signed-off-by: Xu Xuehui <xxh@rock-chips.com>
+
+arch/arm64/boot/dts/rockchip/rk3328-evb-android.dts
+
+commit da1506cbf5f320d8a01bd258d1879f4dbfd3380c
+Author: Wu Liangqing <wlq@rock-chips.com>
+Date:   Sat Apr 28 12:02:59 2018 +0800
+
+    camera: rockchip: set system status SYS_STATUS_ISP when camera on/off
+    
+    Change-Id: Ibc576b351b3db877a427ddd78c008182f1d78a56
+    Signed-off-by: Wu Liangqing <wlq@rock-chips.com>
+
+drivers/media/video/rk30_camera_oneframe.c
+
+commit 9b4e4e12091561b6702ea263a1713a3b6517e3bd
+Author: Wu Liangqing <wlq@rock-chips.com>
+Date:   Sat Apr 28 12:00:03 2018 +0800
+
+    arm64: dts: rockchip: px30: dmc set SYS_STATUS_ISP
+    
+    Change-Id: Ib0c9b3ac6ec85aa7e05c1c7389e644d0bca4ffc8
+    Signed-off-by: Wu Liangqing <wlq@rock-chips.com>
+
+arch/arm64/boot/dts/rockchip/px30.dtsi
+
+commit 09b5dcfc98d7b3f5102effe1c8a4090b8b4b8c34
+Author: Finley Xiao <finley.xiao@rock-chips.com>
+Date:   Mon Apr 9 10:21:14 2018 +0800
+
+    PM / devfreq: rockchip_dmc: Limit rate when system_status is isp
+    
+    Change-Id: Ia3ebe8210522d7d06854eea14094ba45b8e62a8b
+    Signed-off-by: Finley Xiao <finley.xiao@rock-chips.com>
+
+drivers/devfreq/rockchip_dmc.c
+
+commit a21ea58ee38e83bbd3ade977f858a620016b62be
+Author: Finley Xiao <finley.xiao@rock-chips.com>
+Date:   Sat Apr 28 12:04:12 2018 +0800
+
+    clk: rockchip: px30: Make uart2 clocks critical
+    
+    Change-Id: I6efeb6cee633c9bc39dec43a64a025a4790a6e3d
+    Signed-off-by: Finley Xiao <finley.xiao@rock-chips.com>
+
+drivers/clk/rockchip/clk-px30.c
+
+commit b075e3b123bda312b2997492b1e939f075c26031
+Author: Finley Xiao <finley.xiao@rock-chips.com>
+Date:   Thu Apr 12 16:05:09 2018 +0800
+
+    Revert "clk: rockchip: rk3399: Fix clk_cifout and clk_cifout_src"
+    
+    This reverts commit 44822b10317558fc14d41962a7781d4267cd1592.
+    
+    Change-Id: I4cc331caf0e6cd853099a770f438276762a219f3
+    Signed-off-by: Finley Xiao <finley.xiao@rock-chips.com>
+
+drivers/clk/rockchip/clk-rk3399.c
+
+commit 72e0d7d1d8d93d1becf1c2e1199f72a9529adad5
+Author: Tao Huang <huangtao@rock-chips.com>
+Date:   Fri Apr 27 11:54:16 2018 +0800
+
+    arm64: rk3308_linux_defconfig: enable HARDLOCKUP_PANIC/PANIC_ON_OOPS and PANIC_TIMEOUT=1
+    
+    Make sure kernel panic and reboot when something wrong.
+    
+    Change-Id: Iaed051431fa4ae2fb5bdd952737deb07a24a33c1
+    Signed-off-by: Tao Huang <huangtao@rock-chips.com>
+
+arch/arm64/configs/rk3308_linux_defconfig
+
+commit bf5b40adf70d3f2ddafe1868682e35b52a63c31a
+Author: Finley Xiao <finley.xiao@rock-chips.com>
+Date:   Tue Apr 17 09:12:40 2018 +0800
+
+    arm64: dts: rockchip: Enable dmc for rk3308-evb-10 board
+    
+    The ATF must contain the following commit:
+    35e0de42e8ac ("plat: rk3308: dfs: add ddr_get_rate implement")
+    
+    Change-Id: Idf22418b830c9a1f4ebd2c9b19dc7345bc4cf1c6
+    Signed-off-by: Finley Xiao <finley.xiao@rock-chips.com>
+
+arch/arm64/boot/dts/rockchip/rk3308-evb-v10.dtsi
+
+commit fcac9a5dc4d056e766dae8c63208b065c4ad8abd
+Author: Xinhuang Li <buluess.li@rock-chips.com>
+Date:   Tue Apr 24 19:47:00 2018 +0800
+
+    arm64: dts: rockchip: rk3368: add spdif node
+    
+    Change-Id: Ife612c36f3249cc44a97525eff9f4d3c3d751812
+    Signed-off-by: Xinhuang Li <buluess.li@rock-chips.com>
+
+arch/arm64/boot/dts/rockchip/rk3368.dtsi
+
+commit 03194abddb7b3395d2df117fd83c1610c9938a08
+Author: Shixiang Zheng <shixiang.zheng@rock-chips.com>
+Date:   Wed Apr 25 15:51:59 2018 +0800
+
+    arm64: rockchip_defconfig: enable vop dump buf debug node
+    
+    Change-Id: I4149982d553b11fc9dedc51d45df5864880ffca0
+    Signed-off-by: Shixiang Zheng <shixiang.zheng@rock-chips.com>
+
+arch/arm64/configs/rockchip_defconfig
+
+commit 887e65731db37ac69300b79caeffc2266418d9d0
+Author: Zhen Chen <chenzhen@rock-chips.com>
+Date:   Fri Apr 27 15:26:09 2018 +0800
+
+    arm: rockchip_linux_defconfig: enable MALI_PWRSOFT_765 for midgard DDK r18
+    
+    Change-Id: Ic2e643dfa991bf24a6be509b42fa4056c794f699
+    Signed-off-by: Zhen Chen <chenzhen@rock-chips.com>
+
+arch/arm/configs/rockchip_linux_defconfig
+
+commit f1671758fc28be21b0470b8bb3ee4d0ebde8c0ae
+Author: Finley Xiao <finley.xiao@rock-chips.com>
+Date:   Fri Apr 27 11:57:55 2018 +0800
+
+    arm: dts: rockchip: Change cpu opp-microvolt form one entry to three
+    
+    Single entry is for target voltage and three entries are for
+    <target min max> voltages. Change cpu opp-microvolt form one entry to
+    three entries and set maximum acceptable voltage to a high value so that
+    regulator device can supply multiple consumers at the same time.
+    
+    Change-Id: I3a0dc4e161bae33e36b232c36a0a05a3102359ef
+    Signed-off-by: Finley Xiao <finley.xiao@rock-chips.com>
+
+arch/arm/boot/dts/rk3036.dtsi
+arch/arm/boot/dts/rk3066a.dtsi
+arch/arm/boot/dts/rk312x.dtsi
+arch/arm/boot/dts/rk3229-cpu-opp.dtsi
+arch/arm/boot/dts/rk322x.dtsi
+arch/arm/boot/dts/rk3288-android.dtsi
+arch/arm/boot/dts/rk3288.dtsi
+arch/arm64/boot/dts/rockchip/px30.dtsi
+arch/arm64/boot/dts/rockchip/rk3328.dtsi
+arch/arm64/boot/dts/rockchip/rk3366.dtsi
+arch/arm64/boot/dts/rockchip/rk3399-early-opp.dtsi
+arch/arm64/boot/dts/rockchip/rk3399-opp.dtsi
+
+commit 7872d76144b5b79b8de827f3f10bc7d0c24fd01b
+Author: Jason Song <sxj@rock-chips.com>
+Date:   Fri Apr 27 14:23:14 2018 +0800
+
+    ARM64: dts: rockchip: px5: fix pmu and ddr configs.
+    
+    Change-Id: I7bed4caac70b430752bc6338d15554901892144a
+    Signed-off-by: Jason Song <sxj@rock-chips.com>
+
+arch/arm64/boot/dts/rockchip/rk3368-px5-evb-android.dts
+
+commit 17b13ccea0b92dbe0a5bc386af9be5a405b552d7
+Author: Jason Song <sxj@rock-chips.com>
+Date:   Fri Apr 27 14:20:57 2018 +0800
+
+    ARM64: dts: rockchip: add ramoops support for rk3368-android
+    
+    Change-Id: If570260ce12fd2afc678cefcbfe1a2641b5253d9
+    Signed-off-by: Jason Song <sxj@rock-chips.com>
+
+arch/arm64/boot/dts/rockchip/rk3368-android.dtsi
+
+commit 9fd9c79820e9e0338c7913137f6a4dc1b8be1ae0
+Author: Shixiang Zheng <shixiang.zheng@rock-chips.com>
+Date:   Wed Apr 25 15:19:19 2018 +0800
+
+    drm/rockchip: add a debug node to dump buf from application
+    
+    dump path: /data/vop_buf
+    debug nod: d/dri/0/ff900000.vop/vop_dump/dump
+    echo dump    > dump to dump one frame
+    echo dumpon  > dump to start vop keep dumping
+    echo dumpoff > dump to stop keep dumping
+    echo dumpn   > dump n is the number of dump times
+    if fd err -3 try rm -r /data/vopbuf echo dump1 > dump can fix it
+    if fd err -28 save needed data try rm -r /data/vopbuf
+    
+    Change-Id: Id5fefa428db1b5669ceae418cd8bddfa52e52f61
+    Signed-off-by: Shixiang Zheng <shixiang.zheng@rock-chips.com>
+
+drivers/gpu/drm/drm_debugfs.c
+drivers/gpu/drm/rockchip/Kconfig
+drivers/gpu/drm/rockchip/rockchip_drm_fb.c
+drivers/gpu/drm/rockchip/rockchip_drm_fb.h
+drivers/gpu/drm/rockchip/rockchip_drm_vop.c
+drivers/gpu/drm/rockchip/rockchip_drm_vop.h
+include/drm/drm_crtc.h
+
+commit 1c40af5de0ac8ac6670f417db06b5cee8233191c
+Author: Caesar Wang <wxt@rock-chips.com>
+Date:   Wed Apr 25 18:31:38 2018 +0800
+
+    arm64: dts: rockchip: rk3326-evb-linux-lp3-v10: add the ov5695 for rk3326 mipi
+    
+    This patch adds the ov5695 releated configure with rk3326 mipi/isp.
+    
+    Change-Id: I62d6d8854d7e66fac521b3fea0f4dd35dc2799c4
+    Signed-off-by: Caesar Wang <wxt@rock-chips.com>
+
+arch/arm64/boot/dts/rockchip/rk3326-evb-linux-lp3-v10.dts
+
+commit a657b85fc1e87009b7d0928358928d7c06f43d66
+Author: Hu Kejun <william.hu@rock-chips.com>
+Date:   Wed Apr 25 16:40:39 2018 +0800
+
+    media: i2c: ov5695: initialize sensor driver after io_domain
+    
+    Change-Id: Ia0d754d941ba9bda874efe787a985f00cf1be779
+    Signed-off-by: Hu Kejun <william.hu@rock-chips.com>
+
+drivers/media/i2c/ov5695.c
+
+commit 6f0fe931c520d40b49a6a9683e6e84e637925a5c
+Author: William Wu <william.wu@rock-chips.com>
+Date:   Thu Apr 26 17:08:09 2018 +0800
+
+    BACKPORT: usb: gadget: add tracepoints to the gadget API
+    
+    This new set of tracepoints will help all gadget
+    drivers and UDC drivers when problem appears. Note
+    that, in order to be able to add tracepoints to
+    udc-core.c we had to rename that to core.c and
+    statically link it with trace.c to form
+    udc-core.o. This is to make sure that module name
+    stays the same.
+    
+    Change-Id: I23eb801151a75629a8a2f6e7d9203f58281ed3d2
+    Signed-off-by: Felipe Balbi <felipe.balbi@linux.intel.com>
+    Signed-off-by: William Wu <william.wu@rock-chips.com>
+    (cherry picked from commit 5e42d710a108c23c104e083900d4ba9398e418b0)
+
+drivers/usb/gadget/udc/Makefile
+drivers/usb/gadget/udc/core.c
+drivers/usb/gadget/udc/trace.c
+drivers/usb/gadget/udc/trace.h
+drivers/usb/gadget/udc/udc-core.c
+include/linux/usb/gadget.h
+
+commit 9af9852cc108ee44e03fbd35edac379ed124eab4
+Author: Felipe Balbi <felipe.balbi@linux.intel.com>
+Date:   Tue May 31 13:07:47 2016 +0300
+
+    UPSTREAM: usb: gadget: move gadget API functions to udc-core
+    
+    instead of defining all functions as static inlines,
+    let's move them to udc-core and export them with
+    EXPORT_SYMBOL_GPL, that way we can make sure that
+    only GPL drivers will use them.
+    
+    As a side effect, it'll be nicer to add tracepoints
+    to the gadget API.
+    
+    While at that, also fix Kconfig dependencies to
+    avoid randconfig build failures.
+    
+    Change-Id: I3fcc99c0730608076cfa8624908e58b7ee6f1bef
+    Acked-By: Sebastian Reichel <sre@kernel.org>
+    Acked-by: Peter Chen <peter.chen@nxp.com>
+    Signed-off-by: Felipe Balbi <felipe.balbi@linux.intel.com>
+    Signed-off-by: William Wu <william.wu@rock-chips.com>
+    (cherry-picked from commit 5a8d651a2bde01e00caf78496390d6ae46df80af)
+
+drivers/phy/Kconfig
+drivers/power/Kconfig
+drivers/usb/gadget/udc/udc-core.c
+drivers/usb/host/Kconfig
+drivers/usb/phy/Kconfig
+include/linux/usb/gadget.h
+
+commit 00011b0208bbf96e7995fc2b7fe0ec23e66ec3bb
+Author: Rocky Hao <rocky.hao@rock-chips.com>
+Date:   Thu Apr 26 16:57:59 2018 +0800
+
+    arm: dts: rockchip: update tsadc's pinctrl for rk3288
+    
+    we set cru reset as tshut's default mode, i.e. hw-tshut-mode = <0>, and
+    otp_gpio mode is set accordingly. if gpio mode is set,
+    i.e. hw-tshut-mode = <1>, otp_out is set accordingly.
+    
+    Change-Id: I3cb4588fec171e2867a326f55c2115b1da927ac3
+    Signed-off-by: Rocky Hao <rocky.hao@rock-chips.com>
+
+arch/arm/boot/dts/rk3288-evb-android-rk818-edp.dts
+arch/arm/boot/dts/rk3288-evb-android-rk818-hdmi.dts
+arch/arm/boot/dts/rk3288-evb-android-rk818-lvds.dts
+arch/arm/boot/dts/rk3288-evb-android-rk818-mipi-edp.dts
+arch/arm/boot/dts/rk3288-evb-android-rk818-mipi.dts
+arch/arm/boot/dts/rk3288-evb-rk1608.dts
+arch/arm/boot/dts/rk3288-evb.dtsi
+arch/arm/boot/dts/rk3288-fennec.dts
+arch/arm/boot/dts/rk3288-firefly-reload-linux.dts
+arch/arm/boot/dts/rk3288-firefly-reload.dts
+arch/arm/boot/dts/rk3288-firefly-rk808.dts
+arch/arm/boot/dts/rk3288-firefly.dtsi
+arch/arm/boot/dts/rk3288-miniarm.dts
+arch/arm/boot/dts/rk3288-popmetal-android-vga.dts
+arch/arm/boot/dts/rk3288-popmetal-android.dts
+arch/arm/boot/dts/rk3288-popmetal.dts
+arch/arm/boot/dts/rk3288-r89.dts
+arch/arm/boot/dts/rk3288-rock2-som.dtsi
+arch/arm/boot/dts/rk3288-veyron.dtsi
+arch/arm/boot/dts/rk3288-x7811-rk818-dual-dsi.dts
+arch/arm/boot/dts/rk3288.dtsi
+
+commit b8bca70342256b149528654e3328597baa334364
+Author: Simon Xue <xxm@rock-chips.com>
+Date:   Sun Apr 22 00:29:15 2018 +0800
+
+    iommu/rockchip: support rk_iommu_map_sg for iommu ops
+    
+    Impletement rk_iommu_map_sg for rk_iommu_ops, which only
+    flush TLB once after each sg been mapped, that speed up
+    the map operation.
+    
+    Change-Id: Ief123ad363018d2b3227066c07338ccbd75c9d84
+    Signed-off-by: Simon Xue <xxm@rock-chips.com>
+
+drivers/iommu/rockchip-iommu.c
+
+commit c9b30e4ff462fafcfeb60b3e2127a7bc01f49875
+Author: XiaoDong Huang <derrick.huang@rock-chips.com>
+Date:   Mon Apr 23 17:59:28 2018 +0800
+
+    regulator: tps549b22: add TI TPS549b22 support
+    
+    Change-Id: I7550fc9f78a30b5d8ff705403ad91cfd8727fad6
+    Signed-off-by: XiaoDong Huang <derrick.huang@rock-chips.com>
+
+Documentation/devicetree/bindings/regulator/tps549b22-regulator.txt
+drivers/regulator/Kconfig
+drivers/regulator/Makefile
+drivers/regulator/tps549b22-regulator.c
+
+commit 102d3ecfe1d47d093514eacaec35309db62ca22d
+Author: Steven Rostedt (VMware) <rostedt@goodmis.org>
+Date:   Thu Apr 26 16:36:39 2018 +0800
+
+    UPSTREAM: sched/core: Call __schedule() from do_idle() without enabling preemption
+    
+    I finally got around to creating trampolines for dynamically allocated
+    ftrace_ops with using synchronize_rcu_tasks(). For users of the ftrace
+    function hook callbacks, like perf, that allocate the ftrace_ops
+    descriptor via kmalloc() and friends, ftrace was not able to optimize
+    the functions being traced to use a trampoline because they would also
+    need to be allocated dynamically. The problem is that they cannot be
+    freed when CONFIG_PREEMPT is set, as there's no way to tell if a task
+    was preempted on the trampoline. That was before Paul McKenney
+    implemented synchronize_rcu_tasks() that would make sure all tasks
+    (except idle) have scheduled out or have entered user space.
+    
+    While testing this, I triggered this bug:
+    
+    BUG: unable to handle kernel paging request at ffffffffa0230077
+     ...
+    RIP: 0010:0xffffffffa0230077
+     ...
+    Call Trace:
+      schedule+0x5/0xe0
+      schedule_preempt_disabled+0x18/0x30
+      do_idle+0x172/0x220
+    
+    What happened was that the idle task was preempted on the trampoline.
+    As synchronize_rcu_tasks() ignores the idle thread, there's nothing
+    that lets ftrace know that the idle task was preempted on a trampoline.
+    
+    The idle task shouldn't need to ever enable preemption. The idle task
+    is simply a loop that calls schedule or places the cpu into idle mode.
+    In fact, having preemption enabled is inefficient, because it can
+    happen when idle is just about to call schedule anyway, which would
+    cause schedule to be called twice. Once for when the interrupt came in
+    and was returning back to normal context, and then again in the normal
+    path that the idle loop is running in, which would be pointless, as it
+    had already scheduled.
+    
+    The only reason schedule_preempt_disable() enables preemption is to be
+    able to call sched_submit_work(), which requires preemption enabled. As
+    this is a nop when the task is in the RUNNING state, and idle is always
+    in the running state, there's no reason that idle needs to enable
+    preemption. But that means it cannot use schedule_preempt_disable() as
+    other callers of that function require calling sched_submit_work().
+    
+    Adding a new function local to kernel/sched/ that allows idle to call
+    the scheduler without enabling preemption, fixes the
+    synchronize_rcu_tasks() issue, as well as removes the pointless spurious
+    schedule calls caused by interrupts happening in the brief window where
+    preemption is enabled just before it calls schedule.
+    
+    Reviewed: Thomas Gleixner <tglx@linutronix.de>
+    Signed-off-by: Steven Rostedt (VMware) <rostedt@goodmis.org>
+    Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+    Acked-by: Paul E. McKenney <paulmck@linux.vnet.ibm.com>
+    Cc: Andrew Morton <akpm@linux-foundation.org>
+    Cc: Linus Torvalds <torvalds@linux-foundation.org>
+    Cc: Peter Zijlstra <peterz@infradead.org>
+    Cc: Thomas Gleixner <tglx@linutronix.de>
+    Link: http://lkml.kernel.org/r/20170414084809.3dacde2a@gandalf.local.home
+    Signed-off-by: Ingo Molnar <mingo@kernel.org>
+    -----Shawn: trace on 4.4 for RK3308 -------------------------
+    [  151.389904] BUG: scheduling while atomic: swapper/0/0/0x00000000
+    [  151.390478] Modules linked in:
+    [  151.390813] CPU: 0 PID: 0 Comm: swapper/0 Not tainted 4.4.126 #1327
+    [  151.390830] Hardware name: Rockchip RK3308 evb digital-i2s mic board
+    (DT)
+    [  151.390844] Call trace:
+    [  151.390868] [<ffffff800808731c>] dump_backtrace+0x0/0x1c4
+    [  151.390883] [<ffffff80080874f4>] show_stack+0x14/0x1c
+    [  151.390900] [<ffffff80081e4274>] dump_stack+0x94/0xbc
+    [  151.390919] [<ffffff80080b4c6c>] __schedule_bug+0x3c/0x54
+    [  151.390938] [<ffffff800857e978>] __schedule+0x88/0x45c
+    [  151.390953] [<ffffff800857edc0>] schedule+0x74/0x94
+    [  151.390971] [<ffffff800857f118>] schedule_preempt_disabled+0x20/0x38
+    [  151.390987] [<ffffff80080c9d74>] cpu_startup_entry+0x44/0x204
+    [  151.391007] [<ffffff800857cda0>] rest_init+0x80/0x8c
+    [  151.391025] [<ffffff8008750b04>] start_kernel+0x31c/0x330
+    [  151.391040] [<ffffff80087501c4>] __primary_switched+0x30/0x6c
+    -------------------------------------------------------
+    Change-Id: I12971dfe9c2039920162326aabe1df0ecaf79804
+    Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
+    (cherry-picked from 8663effb24f9430394d3bf1ed2dac42a771421d1)
+
+kernel/sched/core.c
+kernel/sched/idle.c
+kernel/sched/sched.h
+
+commit 4b2e018dc102895d8b3b78b91c646f9b70269e5e
+Author: Tony Xie <xxx@rock-chips.com>
+Date:   Sun Apr 8 11:21:22 2018 +0800
+
+    arm64: dts: rockchip: support board-irdrop for rk3326-863 board
+    
+    Change-Id: I3ccb3c6426d08dc1a186f86d86391a8e307e6e1b
+    Signed-off-by: Tony Xie <xxx@rock-chips.com>
+
+arch/arm64/boot/dts/rockchip/rk3326-863-lp3-v10.dts
+
+commit 1605391f3b6124d1fefd7c6d3deb04784d82571a
+Author: Finley Xiao <finley.xiao@rock-chips.com>
+Date:   Tue Apr 3 22:27:07 2018 +0800
+
+    arm64: dts: rockchip: px30: modify voltage for gpu 200MHz and 300Mhz
+    
+    Change-Id: Ifbd3117d3999b322951df458a12cfe488954803d
+    Signed-off-by: Finley Xiao <finley.xiao@rock-chips.com>
+
+arch/arm64/boot/dts/rockchip/px30.dtsi
+
+commit 96176aa53b0c5c89adec08603689c2ddaafb1269
+Author: Liang Chen <cl@rock-chips.com>
+Date:   Mon Mar 12 18:27:29 2018 +0800
+
+    arm64: dts: rockchip: Enable dmc for px30/rk3326
+    
+    Change-Id: I47c08b9fcd12c21c3cc4731617ebfe4331a0ac72
+    Signed-off-by: Liang Chen <cl@rock-chips.com>
+    Signed-off-by: Finley Xiao <finley.xiao@rock-chips.com>
+
+arch/arm64/boot/dts/rockchip/px30-evb-ddr3-lvds-v10.dts
+arch/arm64/boot/dts/rockchip/px30-evb-ddr3-v10.dts
+arch/arm64/boot/dts/rockchip/px30.dtsi
+arch/arm64/boot/dts/rockchip/rk3326-863-lp3-v10.dts
+arch/arm64/boot/dts/rockchip/rk3326-evb-lp3-v10.dts
+
+commit 4487c3317266287f94e88edc5c0cd26359844164
+Author: Tony Xie <tony.xie@rock-chips.com>
+Date:   Wed Apr 25 11:28:06 2018 +0800
+
+    PM / devfreq: rockchip_dmc: Adjust struct rockchip_dmcfreq in suspend.
+    
+    Change-Id: If9761fe64d7edef6e218dee591f523679e154199
+    Signed-off-by: Tony Xie <tony.xie@rock-chips.com>
+
+drivers/devfreq/rockchip_dmc.c
+
+commit e37dce72a0932f34b2348860194163e83c7146cd
+Author: Finley Xiao <finley.xiao@rock-chips.com>
+Date:   Sun Apr 22 21:11:27 2018 +0800
+
+    PM / devfreq: rockchip_dmc: Update cpu dma latency when change frequency
+    
+    Change-Id: Ia063ce7da2f68ffac4068f4f8136acf178a28918
+    Signed-off-by: Finley Xiao <finley.xiao@rock-chips.com>
+    Signed-off-by: YouMin Chen <cym@rock-chips.com>
+
+drivers/devfreq/rockchip_dmc.c
+
+commit 767bd670b9a227a822bf749389283fa01a439dc4
+Author: Tony Xie <tony.xie@rock-chips.com>
+Date:   Sat Apr 7 16:06:00 2018 +0800
+
+    arm64: dts: rockchip: support complete_irq in dmc node for px30.
+    
+    Change-Id: I99e474f323cf57a15e1ed7431bafe3514aedc603
+    Signed-off-by: Tony Xie <tony.xie@rock-chips.com>
+
+arch/arm64/boot/dts/rockchip/px30.dtsi
+
+commit 5c1ca8c14c865913247164d225ce9792298caf25
+Author: Tony Xie <tony.xie@rock-chips.com>
+Date:   Sat Apr 7 16:01:46 2018 +0800
+
+    PM / devfreq: rockchip_dmc: support wait_complete.
+    
+    Change-Id: Ie3f173f632068f261b84a204bbd36b26b10e1981
+    Signed-off-by: Tony Xie <tony.xie@rock-chips.com>
+    Signed-off-by: YouMin Chen <cym@rock-chips.com>
+
+drivers/clk/rockchip/clk-ddr.c
+drivers/devfreq/rockchip_dmc.c
+include/linux/rockchip/rockchip_sip.h
+include/soc/rockchip/rockchip_dmc.h
+
+commit 46cb48d1dca64daca199f964d517cb22bb550549
+Author: Xing Zheng <zhengxing@rock-chips.com>
+Date:   Wed Apr 25 08:56:00 2018 +0800
+
+    ASoC: rk3308_codec: add a bit of delay during enable DAC
+    
+    The suggestion is from verndor, we should add a bit of
+    delay in key steps until the reference voltages are
+    stable, otherwise, the output of voltage maybe too low.
+    
+    @HPMIX -6dB + LINEOUT -6dB:
+    normal Vpp: ~450mV
+    abnormal Vpp: ~100mV
+    
+    Change-Id: I463d308b809b2c5e74e3bd37573bcbbd624df72e
+    Signed-off-by: Xing Zheng <zhengxing@rock-chips.com>
+
+sound/soc/codecs/rk3308_codec.c
+
+commit f48d45778622b9f64eaac44b3f187b96f90d2192
+Author: CanYang He <hcy@rock-chips.com>
+Date:   Thu Apr 26 14:01:51 2018 +0800
+
+    arm64: dts: rockchip: increase mcu frequency to 97mhz for rk3399
+    
+    mcu run at 97MHz to reduce lpddr4 scale frequency elapsed time
+    
+    Change-Id: Ie2805eaf0d902c9531819217d05a86775d85f809
+    Signed-off-by: CanYang He <hcy@rock-chips.com>
+
+arch/arm64/boot/dts/rockchip/rk3399.dtsi
+
+commit ff3dcfed5fa83dc1be2fee44213c282af02127aa
+Author: CanYang He <hcy@rock-chips.com>
+Date:   Mon Apr 23 15:38:12 2018 +0800
+
+    arm64: dts: rockchip: support lpddr4 for rk3399
+    
+    1. modify lpddr4 setting in rk3399-dram-default-timing.dts
+    2. add a dts file for evb-rev3 lpddr4
+    3. using sram buffer for pcm buffer
+    
+    Change-Id: Id52e9e4b5c366ec61bfb4818d3a14a4ea2024806
+    Signed-off-by: CanYang He <hcy@rock-chips.com>
+    Signed-off-by: Sugar Zhang <sugar.zhang@rock-chips.com>
+
+arch/arm64/boot/dts/rockchip/Makefile
+arch/arm64/boot/dts/rockchip/rk3399-dram-default-timing.dtsi
+arch/arm64/boot/dts/rockchip/rk3399-evb-rev3-android-lp4.dts
+
+commit d45d93b7e1b1ea39256ae70393acb474f1799cb4
+Author: Sugar Zhang <sugar.zhang@rock-chips.com>
+Date:   Mon Apr 23 16:45:54 2018 +0800
+
+    ASoC: rockchip: add support for sram audio buffer
+    
+    This patch force the use of sram buffer for pcm buffer,
+    default is disabled.
+    
+    Change-Id: I2e6936e1071347f767c67066126b22e39fb477c5
+    Signed-off-by: Sugar Zhang <sugar.zhang@rock-chips.com>
+
+sound/core/memalloc.c
+sound/soc/rockchip/Kconfig
+sound/soc/soc-generic-dmaengine-pcm.c
+
+commit 57ef690be66b39978d663da7e7862b9b9e21405a
+Author: Tao Huang <huangtao@rock-chips.com>
+Date:   Thu Apr 26 15:43:41 2018 +0800
+
+    soc: rockchip: rockchip_dmc: add missing CONFIG_
+    
+    Commit 1763310f3320 ("soc: rockchip: Add dummy
+    rockchip_pm_register_notify_to_dmc") make power domain driver
+    unable to receive dmc notify. That will make DDR freq stop or
+    power domain unable to idle or deidle.
+    
+    Fixes: 1763310f3320 ("soc: rockchip: Add dummy rockchip_pm_register_notify_to_dmc")
+    Change-Id: I30970507ce56a663198c777ddf691ccfbf12611e
+    Signed-off-by: Tao Huang <huangtao@rock-chips.com>
+
+include/soc/rockchip/rockchip_dmc.h
+
+commit 801ff69e8bf6b52307018e6d02552da34f4db893
+Author: William Wu <william.wu@rock-chips.com>
+Date:   Thu Apr 26 10:05:02 2018 +0800
+
+    uvcvideo: add quirk for dev parent with broken auto suspend
+    
+    If the parent of uvc device has a quirk for broken
+    auto-suspend function (e.g. rk3328 usb 3.0 root hub),
+    we also need to disable auto-suspend for the uvc device.
+    
+    Change-Id: Ida8d05a411f49f39e13cad3ec837a56598b4a630
+    Signed-off-by: William Wu <william.wu@rock-chips.com>
+
+drivers/media/usb/uvc/uvc_driver.c
+
+commit a46f2b4821767d374ce4150dae38d74c76693ce4
+Author: William Wu <william.wu@rock-chips.com>
+Date:   Wed Apr 25 20:10:19 2018 +0800
+
+    usb: dwc3: rockchip: fix usb peripheral connection fail
+    
+    This patch fix the issue that usb peripheral fails to connect
+    to PC after resume from deep sleep. In my test case, I use a
+    rk3399 sapphire excavator board, and test usb as follows:
+    
+    - Let the system enter deep sleep without usb connection.
+    - During deep sleep, connect the Type-C0 of rk3399 with PC usb port.
+    - Press power key to wakeup system, and check if the PC can detect usb.
+    
+    Without this patch, the usb enumeration often fail with the
+    error log "dwc3 fe800000.dwc3: failed to enable ep0out". It's
+    because that after system resume, the dwc3 pm resume and dwc3
+    pm runtime resume are running asynchronously. If dwc3 runtime
+    resume before pm resume, the dwc3_resume_common() maybe called
+    twice, and cause ep enable failure.
+    
+    This patch use the suspend flag of dev to wait until the dwc3
+    core resume from PM suspend successfully before do dwc3 pm
+    runtime resume.
+    
+    Change-Id: I6a67ad636630699569e16346ac167b785b800f85
+    Signed-off-by: William Wu <william.wu@rock-chips.com>
+
+drivers/usb/dwc3/dwc3-rockchip.c
+
+commit 690646e8292599d30c75329c60cfe1a9cfdc8f89
+Author: Sean Purcell <me@seanp.xyz>
+Date:   Wed Aug 9 19:42:36 2017 -0700
+
+    UPSTREAM: squashfs: Add zstd support
+    
+    Add zstd compression and decompression support to SquashFS. zstd is a
+    great fit for SquashFS because it can compress at ratios approaching xz,
+    while decompressing twice as fast as zlib. For SquashFS in particular,
+    it can decompress as fast as lzo and lz4. It also has the flexibility
+    to turn down the compression ratio for faster compression times.
+    
+    The compression benchmark is run on the file tree from the SquashFS archive
+    found in ubuntu-16.10-desktop-amd64.iso [1]. It uses `mksquashfs` with the
+    default block size (128 KB) and and various compression algorithms/levels.
+    xz and zstd are also benchmarked with 256 KB blocks. The decompression
+    benchmark times how long it takes to `tar` the file tree into `/dev/null`.
+    See the benchmark file in the upstream zstd source repository located under
+    `contrib/linux-kernel/squashfs-benchmark.sh` [2] for details.
+    
+    I ran the benchmarks on a Ubuntu 14.04 VM with 2 cores and 4 GiB of RAM.
+    The VM is running on a MacBook Pro with a 3.1 GHz Intel Core i7 processor,
+    16 GB of RAM, and a SSD.
+    
+    | Method         | Ratio | Compression MB/s | Decompression MB/s |
+    |----------------|-------|------------------|--------------------|
+    | gzip           |  2.92 |               15 |                128 |
+    | lzo            |  2.64 |              9.5 |                217 |
+    | lz4            |  2.12 |               94 |                218 |
+    | xz             |  3.43 |              5.5 |                 35 |
+    | xz 256 KB      |  3.53 |              5.4 |                 40 |
+    | zstd 1         |  2.71 |               96 |                210 |
+    | zstd 5         |  2.93 |               69 |                198 |
+    | zstd 10        |  3.01 |               41 |                225 |
+    | zstd 15        |  3.13 |             11.4 |                224 |
+    | zstd 16 256 KB |  3.24 |              8.1 |                210 |
+    
+    This patch was written by Sean Purcell <me@seanp.xyz>, but I will be
+    taking over the submission process.
+    
+    [1] http://releases.ubuntu.com/16.10/
+    [2] https://github.com/facebook/zstd/blob/dev/contrib/linux-kernel/squashfs-benchmark.sh
+    
+    zstd source repository: https://github.com/facebook/zstd
+    
+    Change-Id: I6d6d6c1a7f565d7ad28eb01d052604ec7b588a0b
+    Signed-off-by: Sean Purcell <me@seanp.xyz>
+    Signed-off-by: Nick Terrell <terrelln@fb.com>
+    Signed-off-by: Chris Mason <clm@fb.com>
+    Acked-by: Phillip Lougher <phillip@squashfs.org.uk>
+    Signed-off-by: Ziyuan Xu <xzy.xu@rock-chips.com>
+    (cherry-picked from commit 87bf54bb43ddd385d2538b777324bf737f243042)
+
+fs/squashfs/Kconfig
+fs/squashfs/Makefile
+fs/squashfs/decompressor.c
+fs/squashfs/decompressor.h
+fs/squashfs/squashfs_fs.h
+fs/squashfs/zstd_wrapper.c
+
+commit 14793dd0f5831f4149961430f70bc1ca71fcb14d
+Author: Nick Terrell <terrelln@fb.com>
+Date:   Wed Aug 9 19:35:53 2017 -0700
+
+    UPSTREAM: lib: Add zstd modules
+    
+    Add zstd compression and decompression kernel modules.
+    zstd offers a wide varity of compression speed and quality trade-offs.
+    It can compress at speeds approaching lz4, and quality approaching lzma.
+    zstd decompressions at speeds more than twice as fast as zlib, and
+    decompression speed remains roughly the same across all compression levels.
+    
+    The code was ported from the upstream zstd source repository. The
+    `linux/zstd.h` header was modified to match linux kernel style.
+    The cross-platform and allocation code was stripped out. Instead zstd
+    requires the caller to pass a preallocated workspace. The source files
+    were clang-formatted [1] to match the Linux Kernel style as much as
+    possible. Otherwise, the code was unmodified. We would like to avoid
+    as much further manual modification to the source code as possible, so it
+    will be easier to keep the kernel zstd up to date.
+    
+    I benchmarked zstd compression as a special character device. I ran zstd
+    and zlib compression at several levels, as well as performing no
+    compression, which measure the time spent copying the data to kernel space.
+    Data is passed to the compresser 4096 B at a time. The benchmark file is
+    located in the upstream zstd source repository under
+    `contrib/linux-kernel/zstd_compress_test.c` [2].
+    
+    I ran the benchmarks on a Ubuntu 14.04 VM with 2 cores and 4 GiB of RAM.
+    The VM is running on a MacBook Pro with a 3.1 GHz Intel Core i7 processor,
+    16 GB of RAM, and a SSD. I benchmarked using `silesia.tar` [3], which is
+    211,988,480 B large. Run the following commands for the benchmark:
+    
+        sudo modprobe zstd_compress_test
+        sudo mknod zstd_compress_test c 245 0
+        sudo cp silesia.tar zstd_compress_test
+    
+    The time is reported by the time of the userland `cp`.
+    The MB/s is computed with
+    
+        1,536,217,008 B / time(buffer size, hash)
+    
+    which includes the time to copy from userland.
+    The Adjusted MB/s is computed with
+    
+        1,536,217,088 B / (time(buffer size, hash) - time(buffer size, none)).
+    
+    The memory reported is the amount of memory the compressor requests.
+    
+    | Method   | Size (B) | Time (s) | Ratio | MB/s    | Adj MB/s | Mem (MB) |
+    |----------|----------|----------|-------|---------|----------|----------|
+    | none     | 11988480 |    0.100 |     1 | 2119.88 |        - |        - |
+    | zstd -1  | 73645762 |    1.044 | 2.878 |  203.05 |   224.56 |     1.23 |
+    | zstd -3  | 66988878 |    1.761 | 3.165 |  120.38 |   127.63 |     2.47 |
+    | zstd -5  | 65001259 |    2.563 | 3.261 |   82.71 |    86.07 |     2.86 |
+    | zstd -10 | 60165346 |   13.242 | 3.523 |   16.01 |    16.13 |    13.22 |
+    | zstd -15 | 58009756 |   47.601 | 3.654 |    4.45 |     4.46 |    21.61 |
+    | zstd -19 | 54014593 |  102.835 | 3.925 |    2.06 |     2.06 |    60.15 |
+    | zlib -1  | 77260026 |    2.895 | 2.744 |   73.23 |    75.85 |     0.27 |
+    | zlib -3  | 72972206 |    4.116 | 2.905 |   51.50 |    52.79 |     0.27 |
+    | zlib -6  | 68190360 |    9.633 | 3.109 |   22.01 |    22.24 |     0.27 |
+    | zlib -9  | 67613382 |   22.554 | 3.135 |    9.40 |     9.44 |     0.27 |
+    
+    I benchmarked zstd decompression using the same method on the same machine.
+    The benchmark file is located in the upstream zstd repo under
+    `contrib/linux-kernel/zstd_decompress_test.c` [4]. The memory reported is
+    the amount of memory required to decompress data compressed with the given
+    compression level. If you know the maximum size of your input, you can
+    reduce the memory usage of decompression irrespective of the compression
+    level.
+    
+    | Method   | Time (s) | MB/s    | Adjusted MB/s | Memory (MB) |
+    |----------|----------|---------|---------------|-------------|
+    | none     |    0.025 | 8479.54 |             - |           - |
+    | zstd -1  |    0.358 |  592.15 |        636.60 |        0.84 |
+    | zstd -3  |    0.396 |  535.32 |        571.40 |        1.46 |
+    | zstd -5  |    0.396 |  535.32 |        571.40 |        1.46 |
+    | zstd -10 |    0.374 |  566.81 |        607.42 |        2.51 |
+    | zstd -15 |    0.379 |  559.34 |        598.84 |        4.61 |
+    | zstd -19 |    0.412 |  514.54 |        547.77 |        8.80 |
+    | zlib -1  |    0.940 |  225.52 |        231.68 |        0.04 |
+    | zlib -3  |    0.883 |  240.08 |        247.07 |        0.04 |
+    | zlib -6  |    0.844 |  251.17 |        258.84 |        0.04 |
+    | zlib -9  |    0.837 |  253.27 |        287.64 |        0.04 |
+    
+    Tested in userland using the test-suite in the zstd repo under
+    `contrib/linux-kernel/test/UserlandTest.cpp` [5] by mocking the kernel
+    functions. Fuzz tested using libfuzzer [6] with the fuzz harnesses under
+    `contrib/linux-kernel/test/{RoundTripCrash.c,DecompressCrash.c}` [7] [8]
+    with ASAN, UBSAN, and MSAN. Additionaly, it was tested while testing the
+    BtrFS and SquashFS patches coming next.
+    
+    [1] https://clang.llvm.org/docs/ClangFormat.html
+    [2] https://github.com/facebook/zstd/blob/dev/contrib/linux-kernel/zstd_compress_test.c
+    [3] http://sun.aei.polsl.pl/~sdeor/index.php?page=silesia
+    [4] https://github.com/facebook/zstd/blob/dev/contrib/linux-kernel/zstd_decompress_test.c
+    [5] https://github.com/facebook/zstd/blob/dev/contrib/linux-kernel/test/UserlandTest.cpp
+    [6] http://llvm.org/docs/LibFuzzer.html
+    [7] https://github.com/facebook/zstd/blob/dev/contrib/linux-kernel/test/RoundTripCrash.c
+    [8] https://github.com/facebook/zstd/blob/dev/contrib/linux-kernel/test/DecompressCrash.c
+    
+    zstd source repository: https://github.com/facebook/zstd
+    
+    Change-Id: I743d2b97db39be7e26045c1fd2a7adc1d1440401
+    Signed-off-by: Nick Terrell <terrelln@fb.com>
+    Signed-off-by: Chris Mason <clm@fb.com>
+    Signed-off-by: Ziyuan Xu <xzy.xu@rock-chips.com>
+    (cherry-picked from commit 73f3d1b48f5069d46ba48aa28c2898dc93185560)
+
+include/linux/zstd.h
+lib/Kconfig
+lib/Makefile
+lib/zstd/Makefile
+lib/zstd/bitstream.h
+lib/zstd/compress.c
+lib/zstd/decompress.c
+lib/zstd/entropy_common.c
+lib/zstd/error_private.h
+lib/zstd/fse.h
+lib/zstd/fse_compress.c
+lib/zstd/fse_decompress.c
+lib/zstd/huf.h
+lib/zstd/huf_compress.c
+lib/zstd/huf_decompress.c
+lib/zstd/mem.h
+lib/zstd/zstd_common.c
+lib/zstd/zstd_internal.h
+lib/zstd/zstd_opt.h
+
+commit 0546200f0efba7440447a551e26c2912e20fb63e
+Author: Nick Terrell <terrelln@fb.com>
+Date:   Fri Aug 4 13:19:17 2017 -0700
+
+    UPSTREAM: lib: Add xxhash module
+    
+    Adds xxhash kernel module with xxh32 and xxh64 hashes. xxhash is an
+    extremely fast non-cryptographic hash algorithm for checksumming.
+    The zstd compression and decompression modules added in the next patch
+    require xxhash. I extracted it out from zstd since it is useful on its
+    own. I copied the code from the upstream XXHash source repository and
+    translated it into kernel style. I ran benchmarks and tests in the kernel
+    and tests in userland.
+    
+    I benchmarked xxhash as a special character device. I ran in four modes,
+    no-op, xxh32, xxh64, and crc32. The no-op mode simply copies the data to
+    kernel space and ignores it. The xxh32, xxh64, and crc32 modes compute
+    hashes on the copied data. I also ran it with four different buffer sizes.
+    The benchmark file is located in the upstream zstd source repository under
+    `contrib/linux-kernel/xxhash_test.c` [1].
+    
+    I ran the benchmarks on a Ubuntu 14.04 VM with 2 cores and 4 GiB of RAM.
+    The VM is running on a MacBook Pro with a 3.1 GHz Intel Core i7 processor,
+    16 GB of RAM, and a SSD. I benchmarked using the file `filesystem.squashfs`
+    from `ubuntu-16.10-desktop-amd64.iso`, which is 1,536,217,088 B large.
+    Run the following commands for the benchmark:
+    
+        modprobe xxhash_test
+        mknod xxhash_test c 245 0
+        time cp filesystem.squashfs xxhash_test
+    
+    The time is reported by the time of the userland `cp`.
+    The GB/s is computed with
+    
+        1,536,217,008 B / time(buffer size, hash)
+    
+    which includes the time to copy from userland.
+    The Normalized GB/s is computed with
+    
+        1,536,217,088 B / (time(buffer size, hash) - time(buffer size, none)).
+    
+    | Buffer Size (B) | Hash  | Time (s) | GB/s | Adjusted GB/s |
+    |-----------------|-------|----------|

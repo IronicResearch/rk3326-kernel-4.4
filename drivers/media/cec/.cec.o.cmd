@@ -1,0 +1,1 @@
+cmd_drivers/media/cec/cec.o := ./../prebuilts/gcc/linux-x86/aarch64/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-ld -EL    -r -o drivers/media/cec/cec.o drivers/media/cec/cec-core.o drivers/media/cec/cec-adap.o drivers/media/cec/cec-api.o drivers/media/cec/cec-edid.o drivers/media/cec/cec-notifier.o 

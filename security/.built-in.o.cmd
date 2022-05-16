@@ -1,0 +1,1 @@
+cmd_security/built-in.o :=  ./../prebuilts/gcc/linux-x86/aarch64/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-ld -EL    -r -o security/built-in.o security/keys/built-in.o security/commoncap.o security/min_addr.o security/security.o security/selinux/built-in.o security/lsm_audit.o security/optee_linuxdriver/built-in.o security/integrity/built-in.o 

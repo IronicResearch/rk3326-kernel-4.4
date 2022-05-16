@@ -1,0 +1,499 @@
+#include <dt-bindings/gpio/gpio.h>
+#include <linux/gpio.h>
+#include <linux/of_gpio.h>
+#include <linux/module.h>
+#include <linux/kernel.h>
+#include <linux/init.h>
+#include <linux/platform_device.h>
+#include <linux/fb.h>
+#include <linux/backlight.h>
+#include <linux/err.h>
+#include <linux/pwm.h>
+#include <linux/pwm_backlight.h>
+#include <linux/slab.h>
+#include <linux/proc_fs.h>
+#include <linux/termios.h>
+#include <linux/mutex.h>
+#include <linux/workqueue.h>
+#include <linux/input.h>
+#include <linux/irq.h>
+#include <linux/interrupt.h>
+#include <linux/delay.h>
+#include <linux/hrtimer.h>
+#include <linux/i2c.h>
+#include <linux/io.h>
+#include <linux/async.h>
+#include <linux/input/mt.h>
+#include <linux/wakelock.h>
+
+
+//#define INVALID_GPIO -1
+
+struct proc_dir_entry *gpio_extend_dir;
+static struct class *rk_gpio_class = NULL;
+static struct input_dev *sinput_dev;
+static struct timer_list gpio_timer;
+static unsigned int time_delay = HZ/15;
+
+//extern void rk_send_power_key(int state);
+extern void rk_send_wakeup_key(void);
+static unsigned int gpio_state = 0;
+static int gpio0_b3;
+static int gpio0_b4;
+static int gpio3_d3;
+static int gpio8_a3;
+static int gpio8_a6;
+static int gl_value;
+static int gl_switch = 1;
+static int irq_gpio3_d3;
+
+struct		delayed_work read_io_work;
+static struct of_device_id gpio_of_match[] = {
+	{ .compatible = "gpio_ctrl" },
+	{ }
+};
+
+
+MODULE_DEVICE_TABLE(of, gpio_of_match);
+
+
+
+
+static ssize_t gpio_write_proc_string(struct file *file, const char __user *buffer,
+					size_t count, loff_t *pos)
+{
+	char *buf;
+	char buf2[11] = {0};
+	//int i = 0;
+	int ret;
+	if (count < 1)
+		return -EINVAL;
+
+	buf = kmalloc(count, GFP_KERNEL);
+	if (!buf)
+		return -ENOMEM;
+
+	if (copy_from_user(buf, buffer, count)) {
+		kfree(buf);
+		return -EFAULT;
+	}
+	
+	//memset(disp_str,0,16);
+	//memcpy(disp_str,buf,(count > 16 ? 16:count));
+	//tm1638_show_string(disp_str);
+
+	printk("gpio_write_proc_string gpio buf = %s\n", buf);
+	strncpy(buf2, buf, ((count > sizeof(buf2)) ? sizeof(buf2) : count));
+	buf2[10] = '\0';
+	printk("buf2 = %s\n", buf2);	
+	
+#if 1
+if(buf2[0] == '0' && buf2[1] == '0')
+{
+	printk("set c1  input\n");
+	gpio_direction_input(gpio0_b3);
+}
+
+if(buf2[0] == '1' && buf2[1] == '0')
+{
+	printk("set c1 out 0\n");
+	gpio_direction_output(gpio0_b3, 0);
+}
+
+if(buf2[0] == '1' && buf2[1] == '1')
+{
+	printk("set c1 out 1\n");
+	gpio_direction_output(gpio0_b3, 1);
+}
+
+
+
+if(buf2[2] == '0' && buf2[3] == '0')
+{
+	printk("set c2 input\n");
+	gpio_direction_input(gpio0_b4);
+}
+
+if(buf2[2] == '1' && buf2[3] == '0')
+{
+	printk("set c2 output 0\n");
+	gpio_direction_output(gpio0_b4, 0);
+}
+
+if(buf2[2] == '1' && buf2[3] == '1')
+{
+	printk("set c2 output 1\n");
+	gpio_direction_output(gpio0_b4, 1);
+}
+
+
+
+
+if(buf2[4] == '0' && buf2[5] == '0')
+{
+	printk("set c3 input\n");
+	gpio_direction_input(gpio3_d3);
+}
+
+if(buf2[4] == '1' && buf2[5] == '0')
+{
+	printk("set c3 output 0\n");
+	gpio_direction_output(gpio3_d3, 0);
+}
+
+if(buf2[4] == '1' && buf2[5] == '1')
+{
+	printk("set c3 output 1\n");
+	gpio_direction_output(gpio3_d3, 1);
+}
+
+
+if(buf2[6] == '0' && buf2[7] == '0')
+{
+	printk("set c3 input\n");
+	gpio_direction_input(gpio8_a3);
+}
+
+if(buf2[6] == '1' && buf2[7] == '0')
+{
+	printk("set c3 output 0\n");
+	gpio_direction_output(gpio8_a3, 0);
+}
+
+if(buf2[6] == '1' && buf2[7] == '1')
+{
+	printk("set c3 output 1\n");
+	gpio_direction_output(gpio8_a3, 1);
+}
+
+
+if(buf2[8] == '0' && buf2[9] == '0')
+{
+	printk("set c3 input\n");
+	gpio_direction_input(gpio8_a6);
+}
+
+if(buf2[8] == '1' && buf2[9] == '0')
+{
+	printk("set c3 output 0\n");
+	gpio_direction_output(gpio8_a6, 0);
+}
+
+if(buf2[8] == '1' && buf2[9] == '1')
+{
+	printk("set c3 output 1\n");
+	gpio_direction_output(gpio8_a6, 1);
+}
+
+#endif
+
+
+	kfree(buf);
+	return count;
+}
+
+static int gpio_str_proc_show(struct seq_file *m, void *v)
+{
+	//seq_printf(m, "%s\n",disp_str);
+	int ret;
+	printk("gpio_str_proc_show something\n");
+	# if 0
+	ret = gpio_get_value(gpio0_b3);
+	printk("gpio0_b3 is %d\n",ret);
+
+	ret = gpio_get_value(gpio0_b4);
+	printk("gpio0_b4 is %d\n",ret);
+
+	ret = gpio_get_value(gpio3_d3);
+	printk("gpio3_d3 is %d\n",ret);
+	#endif
+	return 0;
+}
+
+static int gpio_str_proc_open(struct inode *inode, struct file *file)
+{
+	return single_open(file, gpio_str_proc_show, NULL);
+}
+
+static int gpio_str_proc_read(struct file *file, char *buffer,
+						size_t count, loff_t *pos)
+{
+	char buf2[6] = {0};
+	if (count < 1)
+		return -EINVAL;
+	
+	//gpio_lock(&gpio_lock);
+
+
+	buf2[0] = (gpio_get_value(gpio0_b3)== 1) ? '1':'0';
+	printk("gpio0_b3 is %c\n",buf2[0]);
+
+	buf2[1] = (gpio_get_value(gpio0_b4)== 1) ? '1':'0';
+	printk("gpio0_b4 is %c\n",buf2[1]);
+
+	buf2[2] = (gpio_get_value(gpio3_d3)== 1) ? '1':'0';
+	printk("gpio3_d3 is %c\n",buf2[2]);
+
+	buf2[3] = (gpio_get_value(gpio8_a3)== 1) ? '1':'0';
+	printk("gpio8_a3 is %c\n",buf2[3]);
+
+	buf2[4] = (gpio_get_value(gpio8_a6)== 1) ? '1':'0';
+	printk("gpio8_a6 is %c\n",buf2[4]);
+
+	buf2[5] = '\0';
+	printk("buf2 = %s\n", buf2);
+	if (copy_to_user(buffer, buf2, count)) {
+		//gpio_unlock(&gpio_lock); 		
+		return -EFAULT;
+	}	
+	
+	//gpio_unlock(&gpio_lock);	
+
+	return 0;
+
+}
+
+
+static const struct file_operations gpio_extend_fops = {
+	.owner		= THIS_MODULE,
+	.open		= gpio_str_proc_open,
+	.read		= gpio_str_proc_read,
+	.llseek		= seq_lseek,
+	.release	= single_release,
+	.write		= gpio_write_proc_string,
+};
+
+
+static void gpio_timer_func(unsigned long data)
+{
+	
+
+	gpio_state = gpio_get_value(gpio3_d3);
+	if(gl_switch == 1)
+	{
+		input_event(sinput_dev, EV_KEY, KEY_WAKEUP, 1);
+		input_sync(sinput_dev);
+		input_event(sinput_dev, EV_KEY, KEY_WAKEUP, 0);
+		input_sync(sinput_dev);
+	}
+	if(gpio_state == 1 && gl_switch == 1)
+	{
+		input_event(sinput_dev, EV_KEY, KEY_F1, 1);
+		input_sync(sinput_dev);
+		input_event(sinput_dev, EV_KEY, KEY_F1, 0);
+		input_sync(sinput_dev);
+	}	
+	else if (gpio_state == 0 && gl_switch == 1)
+	{
+		input_event(sinput_dev, EV_KEY, KEY_F2, 1);
+		input_sync(sinput_dev);
+		input_event(sinput_dev, EV_KEY, KEY_F2, 0);
+		input_sync(sinput_dev);
+	}
+	printk("cjc gpio_timer_func = %d\n",gpio_state);
+	
+}
+
+
+
+static irqreturn_t gpio_detect_status(int irq, void *dev_id)
+{
+	//gpio_state = gpio_get_value(gpio2_a4);
+	//printk("hxl gpio_detect_status = %d\n",gpio_state);
+	mod_timer(&gpio_timer, jiffies +  time_delay );
+	return IRQ_HANDLED;
+}
+
+
+static int init_timer_gpio(void) 
+{
+	init_timer(&gpio_timer);
+	gpio_timer.function = gpio_timer_func;
+	//mod_timer(&gpio_timer, jiffies +  time_delay );
+	return 0;
+}
+
+
+static ssize_t gpio3d3_switch_show(struct class *cls,struct class_attribute *attr, char *_buf)
+{
+	 
+       printk("%s>>>>>>>> gl_switch = %d\n",__func__, gl_switch);
+	   ssize_t len = 0;
+	  
+	   	//int value = 0;
+	   	//value = gpio_get_value(gpio0_b4);
+		
+	    len += snprintf(_buf + len, PAGE_SIZE - len, "%d \r\n", gl_switch);
+
+
+	   	return 0;
+}
+
+static ssize_t gpio3d3_switch_store(struct class *cls,struct class_attribute *attr, const char *buf, size_t _count)
+{
+        gl_switch = simple_strtol(buf,NULL,10);
+		
+        if(gl_switch <= 1 && gl_switch>=  0)
+        {
+                //Setting_Directions(gl_backlight);
+				
+				//gpio_direction_output(gpio0_b4, gl_value);				
+                printk(KERN_INFO "gl_switch is %d\n",gl_switch);
+        }
+        else
+        {
+                //backlight_power_on(0);
+                printk(KERN_INFO "gl_switch is not support\n");
+        }
+
+    return _count;
+}
+
+
+static CLASS_ATTR(gpio3d3_switch, 0664, gpio3d3_switch_show, gpio3d3_switch_store);
+
+static int gpio_sys_init(void)
+{
+    int ret ;
+    rk_gpio_class = class_create(THIS_MODULE, "rk_gpio");
+    ret =  class_create_file(rk_gpio_class, &class_attr_gpio3d3_switch);
+    if (ret)
+    {
+       printk("Fail to creat class gpio5c1.\n");
+    }
+	
+   return 0;
+}
+
+
+
+static int gpio_control_probe(struct platform_device *pdev)
+{
+		struct device *dev = &pdev->dev;
+        struct device_node *node = pdev->dev.of_node;
+        enum of_gpio_flags flags;
+        int ret;
+        int error;
+		struct proc_dir_entry *ent;
+		struct input_dev *input = NULL;
+
+        printk("cjc func: %s\n", __func__); 
+        if (!node)
+                return -ENODEV;
+
+		
+		input = devm_input_allocate_device(dev);
+		if (!input) {
+			error = -ENOMEM;
+			return error;
+		}
+
+
+		input->name = "cjc-keypad";	/* pdev->name; */
+		input->phys = "gpio-keys/input111";
+		input->dev.parent = dev;
+		
+		input->id.bustype = BUS_HOST;
+		input->id.vendor = 0x0001;
+		input->id.product = 0x0001;
+		input->id.version = 0x0100;
+		
+
+		error = input_register_device(input);
+		if (error) {
+			pr_err("gpio-keys: Unable to register input device, error: %d\n",error);
+		}
+
+		sinput_dev = input;
+		input_set_capability(input, EV_KEY, KEY_F1);
+		input_set_capability(input, EV_KEY, KEY_F2);
+
+	printk("gpio_control_prob cjc #####\n");
+
+
+	gpio3_d3 = of_get_named_gpio_flags(node, "gpio_control_1", 0, &flags);
+	//en_value = (flags == GPIO_ACTIVE_HIGH)? 1:0;
+	//gpio =  of_get_named_gpio(node, "gpios", 0);
+	if(!gpio_is_valid(gpio3_d3)){
+		dev_err(&pdev->dev, "invalid gpio_control gpio%d\n", gpio3_d3);
+	}
+	
+	ret = devm_gpio_request(&pdev->dev, gpio3_d3, "gpio3");
+	if (ret) {
+		dev_err(&pdev->dev,
+			"failed to request GPIO%d for otg_drv\n",
+			gpio3_d3);
+		return -EINVAL;
+	}
+	printk("set gpio direction_input cjc ###");
+	gpio_direction_input(gpio3_d3);
+
+
+	irq_gpio3_d3 = gpio_to_irq(gpio3_d3);
+	if (irq_gpio3_d3 < 0) {
+		printk("gpio-keys: Unable to get irq number for GPIO %d\n",
+			   gpio3_d3);
+		gpio_free(gpio3_d3);
+		//goto fail1;
+	}
+
+
+	error = devm_request_irq(dev, irq_gpio3_d3, gpio_detect_status,
+						 IRQF_TRIGGER_FALLING|IRQ_TYPE_EDGE_RISING,
+						 "gpio3_d3",
+						 NULL);		
+
+	init_timer_gpio();
+	gpio_sys_init();
+
+	return 0;
+file:
+		printk("func: %s some error\n", __func__); 
+        return 0;
+}
+
+static int gpio_control_remove(struct platform_device *pdev)
+{
+        //printk("func: %s\n", __func__); 
+	return 0;
+}
+
+#ifdef CONFIG_PM_SLEEP
+static int gpio_control_suspend(struct device *dev)
+{
+        //printk("func: %s\n", __func__); 
+	return 0;
+}
+
+static int gpio_control_resume(struct device *dev)
+{
+        //printk("func: %s\n", __func__); 
+	return 0;
+}
+#endif
+
+static const struct dev_pm_ops gpio_control_ops = {
+#ifdef CONFIG_PM_SLEEP
+	.suspend = gpio_control_suspend,
+	.resume = gpio_control_resume,
+	.poweroff = gpio_control_suspend,
+	.restore = gpio_control_resume,
+#endif
+};
+
+static struct platform_driver gpio_driver = {
+	.driver		= {
+		.name		= "gpio_control",
+		.owner		= THIS_MODULE,
+		.pm		= &gpio_control_ops,
+		.of_match_table	= of_match_ptr(gpio_of_match),
+	},
+	.probe		= gpio_control_probe,
+	.remove		= gpio_control_remove,
+};
+
+module_platform_driver(gpio_driver);
+
+MODULE_DESCRIPTION("gpio_control");
+MODULE_LICENSE("GPL");
+MODULE_ALIAS("platform:gpio_control");

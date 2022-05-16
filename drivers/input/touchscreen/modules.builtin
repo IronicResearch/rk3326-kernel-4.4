@@ -1,0 +1,9 @@
+kernel/drivers/input/touchscreen/of_touchscreen.ko
+kernel/drivers/input/touchscreen/gslx680_pad.ko
+kernel/drivers/input/touchscreen/gsl_point_id.ko
+kernel/drivers/input/touchscreen/gslx680.ko
+kernel/drivers/input/touchscreen/gsl_point_id.ko
+kernel/drivers/input/touchscreen/gsl3673.ko
+kernel/drivers/input/touchscreen/gsl_point_id.ko
+kernel/drivers/input/touchscreen/gsl3673_800x1280.ko
+kernel/drivers/input/touchscreen/gsl_point_id.ko

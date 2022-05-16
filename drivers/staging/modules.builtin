@@ -1,0 +1,4 @@
+kernel/drivers/staging/android/timed_gpio.ko
+kernel/drivers/staging/android/rk_timed_gpio.ko
+kernel/drivers/staging/iio/imu/inv_mpu/inv-mpu-iio.ko
+kernel/drivers/staging/imgtec/rogue/pvrsrvkm.ko

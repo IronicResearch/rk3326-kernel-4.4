@@ -1,0 +1,1 @@
+cmd_lib/zlib_deflate/built-in.o :=  ./../prebuilts/gcc/linux-x86/aarch64/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-ld -EL    -r -o lib/zlib_deflate/built-in.o lib/zlib_deflate/zlib_deflate.o 
